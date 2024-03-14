@@ -1,8 +1,8 @@
 {
-  "name": "next-firebase-starter",
+  "name": "RareFE",
   "private": true,
   "version": "1.0.0",
-  "author": "Trinity Christiana",
+  "author": "Maggie Chafee, Dylan Moore, Shari Ebach, Brandon Schnurbusch", 
   "scripts": {
     "dev": "next dev",
     "build": "next build",
