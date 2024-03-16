@@ -18,5 +18,21 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: #121212;
+}
+
+.card-style {
+  background-color: #282828;
+  border-color: #404040;
+  border-width: 3px;
+  color: #ffffff;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 10px
 }
