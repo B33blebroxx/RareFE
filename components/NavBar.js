@@ -12,11 +12,9 @@ import { useAuth } from '../utils/context/authContext';
 
 export default function NavBar() {
   const { user } = useAuth();
-  console.warn(user);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      `{console.warn(user.id)}`
       <Container>
         <Link passHref href="/">
           <Navbar.Brand>CHANGE ME</Navbar.Brand>
@@ -27,7 +25,7 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link href={`../users/${user.id}`} passHref>
+            <Link href={`../users/${user[0]?.id}`} passHref>
               <Nav.Link>Edit User Profile</Nav.Link>
             </Link>
             <Button variant="danger" onClick={signOut}>

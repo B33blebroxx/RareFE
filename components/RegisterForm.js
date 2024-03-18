@@ -22,7 +22,6 @@ function RegisterForm({ userObj }) {
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    console.warn(userObj);
     if (userObj?.id) setFormData(userObj);
   }, [userObj, user]);
 

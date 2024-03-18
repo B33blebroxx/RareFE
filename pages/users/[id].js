@@ -9,7 +9,6 @@ export default function EditUserProfile() {
   const { id } = router.query;
 
   useEffect(() => {
-    console.warn(editUser);
     if (id) {
       getSingleUser(id).then(setEditUser);
     }
