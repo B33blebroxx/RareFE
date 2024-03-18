@@ -36,3 +36,23 @@ body {
   padding: 25px;
   gap: 10px
 }
+.postTitle {
+  color: aqua;
+}
+.commentsWrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 10px
+  
+}
+.buttonWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 2px;
+}

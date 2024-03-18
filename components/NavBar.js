@@ -26,7 +26,7 @@ export default function NavBar() {
             <Link passHref href="/posts">
               <Nav.Link>Posts</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>
+            <Button variant="outline-secondary" onClick={signOut}>
               Sign Out
             </Button>
           </Nav>
