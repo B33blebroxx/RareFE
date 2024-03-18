@@ -17,13 +17,16 @@ export default function NavBar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Link passHref href="/">
-          <Navbar.Brand>CHANGE ME</Navbar.Brand>
+          <Navbar.Brand>RARE BOOKS</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
+            </Link>
+            <Link passHref href="/posts">
+              <Nav.Link>Posts</Nav.Link>
             </Link>
             <Link href={`../users/${user[0]?.id}`} passHref>
               <Nav.Link>Edit User Profile</Nav.Link>
