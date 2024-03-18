@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getSinglePost } from '../../api/postsApi';
 import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
-import CommentForm from '../../components/forms/commentForm';
+import CommentForm from '../../components/forms/CommentForm';
 
 function ViewSinglePost() {
   const router = useRouter();
