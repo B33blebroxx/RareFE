@@ -1,80 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getSinglePost } from '../../api/postsApi';
 import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
-import { addReaction, getAPostsReactions, getReactionsTotals } from '../../api/reactionsApi';
+import { addReaction, getReactionsTotals } from '../../api/reactionsApi';
 import CommentForm from '../../components/forms/commentForm';
-import ReactionCard from '../../components/cards/ReactionCard';
 import { useAuth } from '../../utils/context/authContext';
 
 function ViewSinglePost() {
   const router = useRouter();
-  const { user } = useAuth;
+  const { user } = useAuth();
   const { id } = router.query;
   const [post, setPost] = useState({});
   const [postDetails, setPostDetails] = useState({});
   const [commentsSwitch, setCommentsSwitch] = useState(false);
-  const [count, setCount] = useState(-1);
-  const [pReactions, setPReactions] = useState([]);
-  const [groupedReactions, setGroupedReactions] = useState([]);
+  const [count, setCount] = useState({});
+  const mountedRef = useRef(true);
 
-  useEffect(() => {
-    const groupReactions = () => {
-      const groups = pReactions.reduce((accumulator, reaction) => {
-        if (!accumulator[reaction.label]) {
-          accumulator[reaction.label] = {
-            label: reaction.label,
-            image: reaction.image,
-            count: 0,
-          };
-        }
-        accumulator[reaction.label].count += reaction.count;
-        return accumulator;
-      }, {});
-      return Object.values(groups);
-    };
+  useEffect(() => () => {
+    mountedRef.current = false;
+  }, []);
 
-    // Update the grouped reactions state
-    setGroupedReactions(groupReactions());
-  }, [pReactions]); // Run this effect whenever pReactions changes
   const getTheSinglePost = async () => {
     const thisPost = await getSinglePost(id);
     const details = await viewSinglePostComments(thisPost.id);
-    const postReactions = await getAPostsReactions(thisPost.id);
     const reactionData = await getReactionsTotals(thisPost.id);
 
-    setPost(thisPost);
-    setPostDetails(details);
-    setPReactions(postReactions);
-    setCount(reactionData);
-    setCommentsSwitch(false);
+    if (mountedRef.current) {
+      setPost(thisPost);
+      setPostDetails(details);
+      setCount(reactionData);
+      setCommentsSwitch(false);
+    }
+  };
+
+  const incrementReaction = (reactId) => {
+    const payload = {
+      postId: post.id, rareUserId: user.id, reactionId: reactId,
+    };
+    addReaction(payload);
   };
 
   const viewComments = () => {
     viewSinglePostComments(post.id).then(setPostDetails);
     setCommentsSwitch(true);
   };
-  const incrementReaction = async () => {
-    const payload = {
-      postId: post.id, rareUserId: user[0]?.id, reactionId: pReactions?.reaction?.id,
-    };
-    await addReaction(payload);
-    // Update the reaction count locally
-    const updatedReactions = pReactions.map((reaction) => {
-      if (reaction.id === payload.reactionId) {
-        return { ...reaction, count: reaction.count + 1 };
-      }
-      return reaction;
-    });
-    setPReactions(updatedReactions);
-  };
 
   useEffect(() => {
     getTheSinglePost();
-  }, [id, user]);
+  }, [id, user, post]);
 
   return (
     <>
@@ -103,22 +79,24 @@ function ViewSinglePost() {
                 <Card.Text>{post.publicationDate}</Card.Text>
                 <br />
                 <Card.Text>{post.content}</Card.Text>
-                {groupedReactions.map((reactionGroup) => (
-                  <div className="reactionWrap" key={reactionGroup.label}>
-                    <div className="reaction-images-container">
-                      <ReactionCard
-                        key={reactionGroup.label}
-                        reactionObj={{ label: reactionGroup.label, image: reactionGroup.imageUrl, count: reactionGroup.count }}
-                        incrementReaction={incrementReaction}
-                      />
+                {count ? (
+                  <Card className="card-reactions" style={{ width: '100px' }}>
+                    <div>
+                      {count.reactionCounts?.map((rc) => (
+                        <>
+                          <Card.Img variant="top" src={rc.image} alt={count?.reactionCounts?.label} onClick={() => incrementReaction(rc.reactionId)} style={{ cursor: 'pointer' }} />
+                          <Card.Title>{rc.label}</Card.Title>
+                          <Card.Text>{rc.count}</Card.Text>
+                        </>
+                      ))}
                     </div>
-                  </div>
-                ))}
+                  </Card>
+                ) : ''}
 
                 <Button className="editBtn m-2" variant="outline-info" onClick={viewComments}>
                   View Comments
                 </Button>
-                <div>Total Reactions: {count}</div>
+                <div>Total Reactions: {count.totalReactions}</div>
               </Card.Body>
             </Card>
           </>

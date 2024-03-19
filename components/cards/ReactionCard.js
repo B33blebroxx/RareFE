@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Card, Image } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { getSinglePost } from '../../api/postsApi';
+import { useAuth } from '../../utils/context/authContext';
+import { addReaction } from '../../api/reactionsApi';
 
-function ReactionCard({ reactionObj, incrementReaction }) {
-  const addOne = () => {
-    incrementReaction(reactionObj.id);
+function ReactionCard({ reactionObj, postObj, onUpdate }) {
+  const [post, setPost] = useState({});
+  const { user } = useAuth();
+
+  const incrementReaction = () => {
+    getSinglePost(postObj.id).then(() => setPost());
+    const payload = {
+      postId: post.id, rareUserId: user.id, reactionId: reactionObj.id,
+    };
+    addReaction(payload).then(() => onUpdate());
   };
+
   return (
     <>
       <Card className="card-reactions" style={{ width: '100px' }}>
         <div>
-          <Image src={reactionObj.image} alt={reactionObj.label} onClick={addOne} style={{ cursor: 'pointer' }} />
+          <Card.Img variant="top" src={reactionObj.image} alt={reactionObj.label} onClick={incrementReaction} style={{ cursor: 'pointer' }} />
         </div>
         <Card.Body>
           <Card.Title>{reactionObj.label}</Card.Title>
@@ -28,7 +39,15 @@ ReactionCard.propTypes = {
     image: PropTypes.string,
     count: PropTypes.number,
   }).isRequired,
-  incrementReaction: PropTypes.func.isRequired,
+  postObj: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    publicationDate: PropTypes.string,
+    authorDisplayName: PropTypes.string,
+    imageUrl: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default ReactionCard;
