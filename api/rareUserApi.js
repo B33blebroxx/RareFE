@@ -2,8 +2,9 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const updateRareUser = (id, formData) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/users/${id}`, {
+const updateRareUser = (formData) => new Promise((resolve, reject) => {
+  console.log(formData);
+  fetch(`${endpoint}/users/${formData.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

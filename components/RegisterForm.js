@@ -8,6 +8,7 @@ import { useAuth } from '../utils/context/authContext';
 import { updateRareUser } from '../api/rareUserApi';
 
 const initialState = {
+  id: '',
   firstName: '',
   lastName: '',
   bio: '',
@@ -37,7 +38,7 @@ function RegisterForm({ userObj }) {
     e.preventDefault();
 
     if (userObj.id) {
-      updateRareUser(formData).then(() => router.push(`/users/${user?.id}`));
+      updateRareUser(formData).then(() => router.push(`/users/${user[0]?.id}`));
     } else {
       const payload = { ...formData, uid: user?.uid };
       registerUser(payload).then(() => router.push(`/users/${user?.id}`));
@@ -46,7 +47,7 @@ function RegisterForm({ userObj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h1>{userObj?.uid ? 'Update' : 'Create'} User Profile</h1>
+      <h1>{userObj?.id ? 'Update' : 'Create'} User Profile</h1>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>First Name</Form.Label>
         <Form.Control type="text" name="firstName" value={formData.firstName} required placeholder="Enter First Name" onChange={handleChange} />
@@ -59,7 +60,7 @@ function RegisterForm({ userObj }) {
         <Form.Label>Email Address</Form.Label>
         <Form.Control type="email" name="email" value={formData.email} required placeholder="Enter Email Address" onChange={handleChange} />
       </Form.Group>
-      <Button variant="primary" type="submit">{userObj?.uid ? 'Update' : 'Create'}
+      <Button variant="primary" type="submit">{userObj?.id ? 'Update' : 'Create'}
       </Button>
     </Form>
   );
