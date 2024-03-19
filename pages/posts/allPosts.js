@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { getAllPosts } from '../api/postsApi';
-import PostCard from '../components/cards/postCard';
+import PostCard from '../../components/cards/postCard';
+import { getAllPosts } from '../../api/postsApi';
 
 export default function Posts() {
   const [post, setPost] = useState([]);
@@ -15,6 +16,7 @@ export default function Posts() {
 
   return (
     <>
+      <h2>All Posts</h2>
       <div className="card-container">
         {post.map((posts) => (
           <PostCard key={posts.id} postObj={posts} onUpdate={allPosts} />

@@ -11,7 +11,6 @@ export default function EditUserProfile() {
   // const { user } = useAuth();
 
   useEffect(() => {
-    console.log(id);
     if (id) {
       getSingleUser(id).then(setEditUser);
     }
