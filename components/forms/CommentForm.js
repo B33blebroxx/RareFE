@@ -52,24 +52,30 @@ export default function CommentForm({ commentObj, postObj, onUpdate }) {
 
   return (
     <>
-      <Form onSubmit={handleSubmit} className="userForm">
-        <h1 className="text-white mt-5">{commentObj.id ? 'Update' : 'Add'} Comment</h1>
-        <Form.Group className="mb-3">
-          <Form.Label>Content</Form.Label>
-          <Form.Control
-            as="textarea"
-            style={{ height: '100px' }}
-            name="content"
-            value={commentContent.content}
-            onChange={(e) => setCommentContent(e.target.value)}
-            placeholder="Write your comment here..."
-            required
-          />
-        </Form.Group>
-        <Button variant="outline-secondary" type="submit">
-          {commentObj.id ? 'Update' : 'Add Comment'}
-        </Button>
-      </Form>
+      <div className="commentform-container">
+        <Form onSubmit={handleSubmit} className="userForm">
+          <h1 className="text-white mt-5">{commentObj.id ? 'Update' : 'Add'} Comment</h1><br />
+          <Form.Group className="mb-3">
+            <Form.Label>Content</Form.Label>
+            <Form.Control
+              as="textarea"
+              style={{ height: '100px' }}
+              name="content"
+              value={commentContent.content}
+              onChange={(e) => setCommentContent(e.target.value)}
+              placeholder="Write your comment here..."
+              required
+            />
+          </Form.Group>
+          <Button
+            id="commentbtn"
+            variant="outline-secondary"
+            type="submit"
+          >
+            {commentObj.id ? 'Update' : 'Add Comment'}
+          </Button><br />
+        </Form>
+      </div>
     </>
   );
 }

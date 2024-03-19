@@ -16,6 +16,7 @@ export default function Posts() {
 
   return (
     <>
+      <br />
       <h2>All Posts</h2>
       <div className="card-container">
         {post.map((posts) => (
