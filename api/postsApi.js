@@ -39,7 +39,7 @@ const getUsersPosts = (userId) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((r) => r.json())
+    .then((response) => response.json())
     .then((data) => {
       if (data) {
         resolve(Object.values(data));

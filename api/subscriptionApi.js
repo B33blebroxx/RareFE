@@ -32,7 +32,7 @@ const subscriberCount = (id) => new Promise((resolve, reject) => {
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((r) => r.json())
+  }).then((response) => response.json())
     .then((data) => resolve(data))
     .catch(reject);
 });

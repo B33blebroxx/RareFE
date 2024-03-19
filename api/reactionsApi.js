@@ -3,24 +3,30 @@ import { clientCredentials } from '../utils/client';
 const endpoint = clientCredentials.databaseURL;
 
 const getAPostsReactions = (postId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/post/${postId}/reaction-details`, {
+  fetch(`${endpoint}/posts/${postId}/reaction-details`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((r) => r.json())
+  }).then((response) => response.json())
     .then((data) => resolve(data))
     .catch(reject);
 });
 
 const getReactionsTotals = (postId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/post/${postId}/reaction-details`, {
+  fetch(`${endpoint}/post/${postId}/reactions`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((r) => r.json())
-    .then((data) => resolve(data))
+  }).then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch(reject);
 });
 
