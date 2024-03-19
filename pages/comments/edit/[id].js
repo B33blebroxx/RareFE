@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSingleComment, viewSinglePostComments } from '../../../api/commentsApi';
-import CommentForm from '../../../components/forms/commentForm';
+import CommentForm from '../../../components/forms/CommentForm';
 import CommentCard from '../../../components/cards/CommentCard';
 
 export default function EditComment() {

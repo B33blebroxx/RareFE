@@ -22,10 +22,7 @@ function RegisterForm({ userObj }) {
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    setFormData((prevState) => ({
-      ...prevState,
-      ...userObj,
-    }));
+    if (userObj?.id) setFormData(userObj);
   }, [userObj, user]);
 
   const handleChange = (e) => {
