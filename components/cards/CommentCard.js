@@ -2,28 +2,38 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
+import { useAuth } from '../../utils/context/authContext';
 import { deleteComment } from '../../api/commentsApi';
 
 function CommentCard({ commentObj, onUpdate }) {
+  const { user } = useAuth();
   const deleteThisComment = () => {
     if (window.confirm(`Delete the comment by ${commentObj.authorName}?`)) {
       deleteComment(commentObj.id).then(() => onUpdate());
     }
   };
+
   return (
     <Card style={{ width: '18rem', margin: '15px auto' }}>
       <Card.Body>
         <Card.Title>Author Name: {commentObj.authorName}</Card.Title>
-        <p>{commentObj.content}</p>
         <p>{commentObj.createdOn}</p>
-        <Link href={`/comments/edit/${commentObj.id}`} passHref>
-          <Button className="editBtn m-2" variant="outline-info">EDIT</Button>
-        </Link>
-        <div>
-          <Button variant="outline-warning" size="sm" onClick={deleteThisComment} className="deleteBtn m-2">
-            DELETE
-          </Button>
-        </div>
+        <p>{commentObj.content}</p>
+
+        {user[0].id === commentObj.authorId ? (
+          <div className="buttonWrap">
+            <Link href={`/comments/edit/${commentObj.id}`} passHref>
+              <Button className="editBtn m-2" variant="outline-info">EDIT</Button>
+            </Link>
+            <div>
+              <Button variant="outline-warning" size="sm" onClick={deleteThisComment} className="deleteBtn m-2">
+                DELETE
+              </Button>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
 
       </Card.Body>
     </Card>

@@ -1,36 +1,36 @@
-import { useRouter } from 'next/router';
-import { Button, Card } from 'react-bootstrap';
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { getSingleComment } from '../../../api/commentsApi';
+import { useRouter } from 'next/router';
+import { getSingleComment, viewSinglePostComments } from '../../../api/commentsApi';
+import CommentForm from '../../../components/forms/commentForm';
+import CommentCard from '../../../components/cards/CommentCard';
 
-function ViewComment() {
-  const [comment, setComment] = useState({});
+export default function EditComment() {
+  const [editComment, setEditComment] = useState({});
+  const [postDetails, setPostDetails] = useState({});
   const router = useRouter();
   const { id } = router.query;
 
-  const getTheSingleComment = () => {
-    getSingleComment(id).then(setComment);
+  const getCPObjects = async () => {
+    const thisComment = await getSingleComment(id);
+    const thisPostObjCom = await viewSinglePostComments(thisComment.postId);
+    setPostDetails(thisPostObjCom);
+    setEditComment(thisComment);
   };
 
   useEffect(() => {
-    getTheSingleComment();
+    getCPObjects();
   }, [id]);
-
+  console.warn(postDetails);
   return (
-    <Card style={{ width: '18rem', margin: '15px auto' }}>
-      <Card.Body>
-        <Card.Title>Author Name: {comment.authorName}</Card.Title>
-        <p>{comment.content}</p>
-        <p>{comment.createdOn}</p>
-        <Link href={`/comments/edit/${comment.id}`} passHref>
-          <Button className="editBtn m-2" variant="outline-info">EDIT</Button>
-        </Link>
-
-      </Card.Body>
-    </Card>
-
+    <>
+      <CommentForm commentObj={editComment} postObj={postDetails} onUpdate={getCPObjects} />
+      <h2 className="postTitle">{postDetails?.title} Comments</h2>
+      <div className="commentsWrap">
+        {postDetails && postDetails.comments && postDetails.comments.map((comment) => (
+          <CommentCard key={comment.id} commentObj={comment} onUpdate={getCPObjects} />
+        ))}
+      </div>
+    </>
   );
 }
-
-export default ViewComment;

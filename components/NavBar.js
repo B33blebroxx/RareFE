@@ -31,7 +31,7 @@ export default function NavBar() {
             <Link href={`../users/${user[0]?.id}`} passHref>
               <Nav.Link>Edit User Profile</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>
+            <Button variant="outline-secondary" onClick={signOut}>
               Sign Out
             </Button>
           </Nav>

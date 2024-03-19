@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -32,14 +33,15 @@ function ViewSinglePost() {
       {commentsSwitch ? (
         <>
           <Button className="editBtn m-2" variant="outline-info" onClick={getTheSinglePost}>
-            Back To Posts
+            Back To Post
           </Button>
           <CommentForm postObj={post} onUpdate={viewComments} />
-          <h2>{postDetails?.title} Comments</h2>
-          {postDetails && postDetails.comments && postDetails.comments.map((comment) => (
-            <CommentCard key={comment.id} commentObj={comment} onUpdate={viewComments} />
-          ))}
-
+          <h2 className="postTitle">{postDetails?.title} Comments</h2>
+          <div className="commentsWrap">
+            {postDetails && postDetails.comments && postDetails.comments.map((comment) => (
+              <CommentCard key={comment.id} commentObj={comment} onUpdate={viewComments} />
+            ))}
+          </div>
         </>
       ) : (
         <div>

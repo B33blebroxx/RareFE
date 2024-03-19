@@ -10,49 +10,59 @@ const initialState = {
 };
 
 export default function CommentForm({ commentObj, postObj, onUpdate }) {
+  const [commentContent, setCommentContent] = useState(initialState);
   const { user } = useAuth();
-  const [formInput, setFormInput] = useState({
-    ...initialState,
-    postId: postObj ? postObj.id : '',
-  });
   const router = useRouter();
 
   useEffect(() => {
-    if (commentObj.id) setFormInput(commentObj);
+    if (commentObj.id) setCommentContent(commentObj);
   }, [commentObj, user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormInput((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCommentContent((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (commentObj.id) {
-      const payload = { createdOn: commentObj.createdOn, ...formInput };
-      updateComment(payload).then(() => router.push(`/user/${commentObj.id}`));
+      const payload = { content: commentContent };
+      updateComment(commentObj.id, payload)
+        .then(() => {
+          // Reset the textarea to an empty string
+          setCommentContent(initialState);
+          onUpdate();
+        })
+        .then(() => router.push(`/posts/${postObj.id}`));
     } else {
-      createComment({ ...formInput, authorId: user.id }).then(onUpdate);
+      const newPayload = {
+        AuthorId: user[0].id,
+        PostId: postObj.id,
+        Content: commentContent,
+      };
+      await createComment(newPayload);
+      setCommentContent(initialState);
+      onUpdate();
     }
   };
 
   return (
     <>
       <Form onSubmit={handleSubmit} className="userForm">
-        <h1 className="text-white mt-5">{commentObj.id ? 'Update' : 'Add'} User</h1>
+        <h1 className="text-white mt-5">{commentObj.id ? 'Update' : 'Add'} Comment</h1>
         <Form.Group className="mb-3">
           <Form.Label>Content</Form.Label>
           <Form.Control
             as="textarea"
-            placeholder="Description"
             style={{ height: '100px' }}
             name="content"
-            value={formInput.content}
-            onChange={handleChange}
+            value={commentContent.content}
+            onChange={(e) => setCommentContent(e.target.value)}
+            placeholder="Write your comment here..."
             required
           />
         </Form.Group>
