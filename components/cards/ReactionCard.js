@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Card } from 'react-bootstrap';
+import { Card, Image } from 'react-bootstrap';
 
 function ReactionCard({ reactionObj, incrementReaction }) {
   const addOne = () => {
@@ -8,9 +8,9 @@ function ReactionCard({ reactionObj, incrementReaction }) {
   };
   return (
     <>
-      <Card className="card-style" style={{ width: '48rem' }}>
+      <Card className="card-reactions" style={{ width: '100px' }}>
         <div>
-          <Button onClick={addOne}><Card.Img variant="top" src={reactionObj.image} /></Button>
+          <Image src={reactionObj.image} alt={reactionObj.label} onClick={addOne} style={{ cursor: 'pointer' }} />
         </div>
         <Card.Body>
           <Card.Title>{reactionObj.label}</Card.Title>

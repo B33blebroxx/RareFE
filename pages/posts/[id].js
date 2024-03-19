@@ -1,21 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getSinglePost } from '../../api/postsApi';
 import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
-import { getAPostsReactions, getReactionsTotals } from '../../api/reactionsApi';
+import { addReaction, getAPostsReactions, getReactionsTotals } from '../../api/reactionsApi';
 import CommentForm from '../../components/forms/commentForm';
+import ReactionCard from '../../components/cards/ReactionCard';
+import { useAuth } from '../../utils/context/authContext';
 
 function ViewSinglePost() {
   const router = useRouter();
+  const { user } = useAuth;
   const { id } = router.query;
   const [post, setPost] = useState({});
   const [postDetails, setPostDetails] = useState({});
   const [commentsSwitch, setCommentsSwitch] = useState(false);
   const [count, setCount] = useState(-1);
   const [pReactions, setPReactions] = useState([]);
+  const [groupedReactions, setGroupedReactions] = useState([]);
 
+  useEffect(() => {
+    const groupReactions = () => {
+      const groups = pReactions.reduce((accumulator, reaction) => {
+        if (!accumulator[reaction.label]) {
+          accumulator[reaction.label] = {
+            label: reaction.label,
+            image: reaction.image,
+            count: 0,
+          };
+        }
+        accumulator[reaction.label].count += reaction.count;
+        return accumulator;
+      }, {});
+      return Object.values(groups);
+    };
+
+    // Update the grouped reactions state
+    setGroupedReactions(groupReactions());
+  }, [pReactions]); // Run this effect whenever pReactions changes
   const getTheSinglePost = async () => {
     const thisPost = await getSinglePost(id);
     const details = await viewSinglePostComments(thisPost.id);
@@ -33,10 +57,24 @@ function ViewSinglePost() {
     viewSinglePostComments(post.id).then(setPostDetails);
     setCommentsSwitch(true);
   };
+  const incrementReaction = async () => {
+    const payload = {
+      postId: post.id, rareUserId: user[0]?.id, reactionId: pReactions?.reaction?.id,
+    };
+    await addReaction(payload);
+    // Update the reaction count locally
+    const updatedReactions = pReactions.map((reaction) => {
+      if (reaction.id === payload.reactionId) {
+        return { ...reaction, count: reaction.count + 1 };
+      }
+      return reaction;
+    });
+    setPReactions(updatedReactions);
+  };
 
   useEffect(() => {
     getTheSinglePost();
-  }, [id]);
+  }, [id, user]);
 
   return (
     <>
@@ -65,12 +103,18 @@ function ViewSinglePost() {
                 <Card.Text>{post.publicationDate}</Card.Text>
                 <br />
                 <Card.Text>{post.content}</Card.Text>
-                {pReactions.map((reaction) => (
-                  <div key={reaction.lable}>
-                    <image src={reaction.imageUrl} alt={reaction.label} style={{ width: '30px', height: '30px', marginRight: '5px' }} />
-                    {reaction.label}: {reaction.count}
+                {groupedReactions.map((reactionGroup) => (
+                  <div className="reactionWrap" key={reactionGroup.label}>
+                    <div className="reaction-images-container">
+                      <ReactionCard
+                        key={reactionGroup.label}
+                        reactionObj={{ label: reactionGroup.label, image: reactionGroup.imageUrl, count: reactionGroup.count }}
+                        incrementReaction={incrementReaction}
+                      />
+                    </div>
                   </div>
                 ))}
+
                 <Button className="editBtn m-2" variant="outline-info" onClick={viewComments}>
                   View Comments
                 </Button>
