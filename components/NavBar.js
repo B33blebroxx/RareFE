@@ -28,6 +28,9 @@ export default function NavBar() {
             <Link passHref href="/posts">
               <Nav.Link>Posts</Nav.Link>
             </Link>
+            <Link passHref href="/users">
+              <Nav.Link>Users</Nav.Link>
+            </Link>
             <Link href={`../users/${user[0]?.id}`} passHref>
               <Nav.Link>Edit User Profile</Nav.Link>
             </Link>
