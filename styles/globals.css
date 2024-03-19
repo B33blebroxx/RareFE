@@ -21,6 +21,10 @@ body {
   background-color: #121212;
 }
 
+h2, h1 {
+  color: #ffffff;
+}
+
 .card-style {
   background-color: #282828;
   border-color: #404040;

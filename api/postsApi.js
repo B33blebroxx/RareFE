@@ -50,8 +50,8 @@ const getUsersPosts = (userId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getSubscribedPosts = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/subscribed`, {
+const getSubscribedPosts = (currentUserId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/posts/${currentUserId}/subscribed`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

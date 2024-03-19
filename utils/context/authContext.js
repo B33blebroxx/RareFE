@@ -25,7 +25,7 @@ const AuthProvider = (props) => {
 
   const updateUser = useMemo(
     () => (uid) => checkUser(uid).then((gamerInfo) => {
-      setUser({ fbUser: oAuthUser, ...gamerInfo });
+      setUser({ ...gamerInfo });
     }),
     [oAuthUser],
   );
@@ -39,7 +39,8 @@ const AuthProvider = (props) => {
           if ('null' in gamerInfo) {
             userObj = gamerInfo;
           } else {
-            userObj = { fbUser, uid: fbUser.uid, ...gamerInfo };
+            userObj = gamerInfo;
+            userObj.uid = fbUser.uid;
           }
           setUser(userObj);
         });
