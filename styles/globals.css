@@ -6,6 +6,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: white;
 }
 
 a {
@@ -69,4 +70,52 @@ flex-direction: row;
 display: flex;
 flex-wrap: wrap;
 flex-direction: row;
+}
+
+.postForm{
+display: flex;
+flex-direction: column;
+width: 700px;
+}
+
+.postform-container{
+display: flex;
+justify-content: center; 
+align-items: center;
+height: 75vh;
+}
+
+#createpost{
+  width: 150px;
+}
+
+#commentbtn{
+  width: 150px;
+}
+
+#userbtn{
+  width:150px;
+}
+
+.userForm{
+display: flex;
+flex-direction: column;
+width: 600px;
+}
+
+.commentform-container{
+align-items: center;
+display: flex;
+}
+
+.regForm{
+display: flex;
+flex-direction: column;
+width: 800px;
+}
+
+#regform-container{
+align-items: center;
+display: flex;
+justify-content: center;
 }

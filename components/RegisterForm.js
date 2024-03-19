@@ -46,23 +46,31 @@ function RegisterForm({ userObj }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h1>{userObj?.id ? 'Update' : 'Create'} User Profile</h1>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>First Name</Form.Label>
-        <Form.Control type="text" name="firstName" value={formData.firstName} required placeholder="Enter First Name" onChange={handleChange} />
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control type="text" name="lastName" value={formData.lastName} required placeholder="Enter Last Name" onChange={handleChange} />
-        <Form.Label>Bio</Form.Label>
-        <Form.Control as="textarea" name="bio" value={formData.bio} required placeholder="Enter your Bio" onChange={handleChange} />
-        <Form.Label>Profile Image Url</Form.Label>
-        <Form.Control type="text" name="profileImageUrl" value={formData.profileImageUrl} required placeholder="Enter URL for profile image" onChange={handleChange} />
-        <Form.Label>Email Address</Form.Label>
-        <Form.Control type="email" name="email" value={formData.email} required placeholder="Enter Email Address" onChange={handleChange} />
-      </Form.Group>
-      <Button variant="primary" type="submit">{userObj?.id ? 'Update' : 'Create'}
-      </Button>
-    </Form>
+    <div id="regform-container">
+      <Form onSubmit={handleSubmit} className="regForm">
+        <br />
+        <h1>{userObj?.id ? 'Update' : 'Create'} User Profile</h1><br />
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>First Name</Form.Label>
+          <Form.Control type="text" name="firstName" value={formData.firstName} required placeholder="Enter First Name" onChange={handleChange} />
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control type="text" name="lastName" value={formData.lastName} required placeholder="Enter Last Name" onChange={handleChange} />
+          <Form.Label>Bio</Form.Label>
+          <Form.Control as="textarea" name="bio" value={formData.bio} required placeholder="Enter your Bio" onChange={handleChange} />
+          <Form.Label>Profile Image Url</Form.Label>
+          <Form.Control type="text" name="profileImageUrl" value={formData.profileImageUrl} required placeholder="Enter URL for profile image" onChange={handleChange} />
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control type="email" name="email" value={formData.email} required placeholder="Enter Email Address" onChange={handleChange} />
+        </Form.Group>
+        <Button
+          id="userbtn"
+          className="profileBtn m-2"
+          variant="outline-info"
+          type="submit"
+        >{userObj?.id ? 'Update' : 'Create'}
+        </Button>
+      </Form>
+    </div>
   );
 }
 

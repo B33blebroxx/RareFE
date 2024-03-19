@@ -58,11 +58,12 @@ function ViewSinglePost() {
     <>
       {commentsSwitch ? (
         <>
+          <br />
           <Button className="editBtn m-2" variant="outline-info" onClick={getTheSinglePost}>
             Back To Post
           </Button>
           <CommentForm postObj={post} onUpdate={viewComments} />
-          <h2 className="postTitle">{postDetails?.title} Comments</h2>
+          <h4 className="postTitle">{postDetails?.title} Comments</h4>
           <div className="commentsWrap">
             {postDetails && postDetails.comments && postDetails.comments.map((comment) => (
               <CommentCard key={comment.id} commentObj={comment} onUpdate={viewComments} />
@@ -70,8 +71,8 @@ function ViewSinglePost() {
           </div>
         </>
       ) : (
-        <div>
-          <h1>Post Details</h1>
+        <div><br />
+          <h2>Post Details</h2><br />
           <>
             <Card className="card-style" style={{ width: '48rem' }}>
               <Card.Img variant="top" src={post.imageUrl} />
@@ -101,6 +102,7 @@ function ViewSinglePost() {
                 <div>Total Reactions: {count.totalReactions}</div>
               </Card.Body>
             </Card>
+            <br /><br />
           </>
         </div>
       )}
