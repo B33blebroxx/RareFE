@@ -4,7 +4,6 @@ import { PropTypes } from 'prop-types';
 import Link from 'next/link';
 
 function PostCard({ postObj }) {
-  console.warn(postObj);
   return (
     <>
       <Card className="card-style" style={{ width: '48rem' }}>

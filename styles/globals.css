@@ -61,6 +61,16 @@ h2, h1 {
   margin: 5px;
   padding: 2px;
 }
+.card-reactions{
+  display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+}
+.reactionWrap {
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+}
 
 .postForm{
 display: flex;

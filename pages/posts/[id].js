@@ -1,22 +1,48 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getSinglePost } from '../../api/postsApi';
 import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
-import CommentForm from '../../components/forms/CommentForm';
+import { addReaction, getReactionsTotals } from '../../api/reactionsApi';
+import { useAuth } from '../../utils/context/authContext';
+import CommentForm from '../../components/forms/commentForm';
 
 function ViewSinglePost() {
   const router = useRouter();
+  const { user } = useAuth();
   const { id } = router.query;
   const [post, setPost] = useState({});
   const [postDetails, setPostDetails] = useState({});
   const [commentsSwitch, setCommentsSwitch] = useState(false);
+  const [count, setCount] = useState({});
+  const mountedRef = useRef(true);
 
-  const getTheSinglePost = () => {
-    getSinglePost(id)?.then(setPost);
-    setCommentsSwitch(false);
+  useEffect(() => () => {
+    mountedRef.current = false;
+  }, []);
+
+  const getTheSinglePost = async () => {
+    const thisPost = await getSinglePost(id);
+    const details = await viewSinglePostComments(thisPost.id);
+    const reactionData = await getReactionsTotals(thisPost.id);
+
+    if (mountedRef.current) {
+      setPost(thisPost);
+      setPostDetails(details);
+      setCount(reactionData);
+      setCommentsSwitch(false);
+    }
+  };
+
+  const incrementReaction = (reactId) => {
+    console.warn(reactId);
+    const payload = {
+      postId: post.id, rareUserId: user[0].id, reactionId: reactId,
+    };
+    addReaction(payload);
   };
 
   const viewComments = () => {
@@ -26,7 +52,7 @@ function ViewSinglePost() {
 
   useEffect(() => {
     getTheSinglePost();
-  }, [id]);
+  }, [id, user, post]);
 
   return (
     <>
@@ -56,9 +82,24 @@ function ViewSinglePost() {
                 <Card.Text>{post.publicationDate}</Card.Text>
                 <br />
                 <Card.Text>{post.content}</Card.Text>
+                {count ? (
+                  <Card className="card-reactions" style={{ width: '100px' }}>
+                    <div>
+                      {count.reactionCounts?.map((rc) => (
+                        <>
+                          <Card.Img variant="top" src={rc.image} alt={rc.label} onClick={() => incrementReaction(rc.reactionId)} style={{ cursor: 'pointer' }} />
+                          <Card.Title>{rc.label}</Card.Title>
+                          <Card.Text>{rc.count}</Card.Text>
+                        </>
+                      ))}
+                    </div>
+                  </Card>
+                ) : ''}
+
                 <Button className="editBtn m-2" variant="outline-info" onClick={viewComments}>
                   View Comments
                 </Button>
+                <div>Total Reactions: {count.totalReactions}</div>
               </Card.Body>
             </Card>
             <br /><br />
