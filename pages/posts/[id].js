@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
@@ -6,8 +7,8 @@ import { getSinglePost } from '../../api/postsApi';
 import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
 import { addReaction, getReactionsTotals } from '../../api/reactionsApi';
-import CommentForm from '../../components/forms/commentForm';
 import { useAuth } from '../../utils/context/authContext';
+import CommentForm from '../../components/forms/commentForm';
 
 function ViewSinglePost() {
   const router = useRouter();
@@ -37,8 +38,9 @@ function ViewSinglePost() {
   };
 
   const incrementReaction = (reactId) => {
+    console.warn(reactId);
     const payload = {
-      postId: post.id, rareUserId: user.id, reactionId: reactId,
+      postId: post.id, rareUserId: user[0].id, reactionId: reactId,
     };
     addReaction(payload);
   };
@@ -84,7 +86,7 @@ function ViewSinglePost() {
                     <div>
                       {count.reactionCounts?.map((rc) => (
                         <>
-                          <Card.Img variant="top" src={rc.image} alt={count?.reactionCounts?.label} onClick={() => incrementReaction(rc.reactionId)} style={{ cursor: 'pointer' }} />
+                          <Card.Img variant="top" src={rc.image} alt={rc.label} onClick={() => incrementReaction(rc.reactionId)} style={{ cursor: 'pointer' }} />
                           <Card.Title>{rc.label}</Card.Title>
                           <Card.Text>{rc.count}</Card.Text>
                         </>
