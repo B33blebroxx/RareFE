@@ -34,7 +34,7 @@ function Home() {
             Sign Out
           </Button>
         </div>
-      ) : (<RegisterForm user={user} onUpdate={onUpdate} />)}
+      ) : (<RegisterForm userObj={user} onUpdate={onUpdate} />)}
     </>
   );
 }
