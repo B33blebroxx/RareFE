@@ -8,7 +8,7 @@ import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
 import { addReaction, getReactionsTotals } from '../../api/reactionsApi';
 import { useAuth } from '../../utils/context/authContext';
-import CommentForm from '../../components/forms/commentForm';
+import CommentForm from '../../components/forms/CommentForm';
 
 function ViewSinglePost() {
   const router = useRouter();

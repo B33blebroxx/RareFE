@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
+import SearchBar from './SearchBar';
 
 export default function NavBar() {
   const { user } = useAuth();
@@ -25,9 +26,6 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link passHref href="/homepage">
-              <Nav.Link>Sub Posts - Homepage</Nav.Link>
-            </Link>
             <Link passHref href="/posts/myPosts">
               <Nav.Link>My Posts</Nav.Link>
             </Link>
@@ -37,13 +35,14 @@ export default function NavBar() {
             <Link passHref href="/users">
               <Nav.Link>Users</Nav.Link>
             </Link>
-            <Link href={`../users/profile/${user[0]?.id}`} passHref>
+            <Link href={`/users/profile/${user[0]?.id}`} passHref>
               <Nav.Link>My Profile</Nav.Link>
             </Link>
             <Button variant="outline-secondary" onClick={signOut}>
               Sign Out
             </Button>
           </Nav>
+          <SearchBar />
         </Navbar.Collapse>
       </Container>
     </Navbar>
