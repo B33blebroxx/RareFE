@@ -37,12 +37,13 @@ function ViewSinglePost() {
     }
   };
 
-  const incrementReaction = (reactId) => {
-    console.warn(reactId);
+  const incrementReaction = async (reactId) => {
     const payload = {
       postId: post.id, rareUserId: user[0].id, reactionId: reactId,
     };
-    addReaction(payload);
+    await addReaction(payload);
+    const reactionData = await getReactionsTotals(post.id);
+    setCount(reactionData);
   };
 
   const viewComments = () => {
@@ -52,7 +53,7 @@ function ViewSinglePost() {
 
   useEffect(() => {
     getTheSinglePost();
-  }, [id, user, post]);
+  }, [id, user]);
 
   return (
     <>
