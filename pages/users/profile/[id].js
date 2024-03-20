@@ -32,7 +32,7 @@ export default function ViewUserProfileAndPosts() {
     };
     if (checkSub === true) {
       setButton('Unsubscribe');
-    } else {
+    } else if (checkSub === false) {
       setButton('Subscribe');
     }
   };
