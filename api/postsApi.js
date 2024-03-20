@@ -80,14 +80,20 @@ const createPost = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const updatePost = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/posts/${payload.id}`, {
+const updatePost = (id, payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/posts/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  }).then((response) => response.JSON)
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response error');
+      }
+      return response.json();
+    })
     .then(resolve)
     .catch(reject);
 });
