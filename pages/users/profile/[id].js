@@ -8,6 +8,7 @@ import { getUsersPosts } from '../../../api/postsApi';
 import UserCard from '../../../components/cards/UserCard';
 import { useAuth } from '../../../utils/context/authContext';
 import PostCard from '../../../components/cards/postCard';
+import { subscribeToUser } from '../../../api/subscriptionApi';
 
 export default function ViewUserProfileAndPosts() {
   const [userProfile, setUserProfile] = useState({});
@@ -16,6 +17,18 @@ export default function ViewUserProfileAndPosts() {
   const router = useRouter();
   const { id } = router.query;
   const isCurrentUserProfile = user.uid === userProfile.uid;
+  const isNotCurrentUserProfile = user.uid !== userProfile.uid;
+
+  const payload = {
+    followerId: user.Id,
+    authorId: userProfile.Id,
+    createdOn: Date.now(),
+  };
+
+  const sub = () => {
+    subscribeToUser(payload);
+  };
+
   const getPosts = () => {
     getUsersPosts(id).then(setUserPosts);
   };
@@ -27,6 +40,10 @@ export default function ViewUserProfileAndPosts() {
 
   return (
     <>
+      <div>{isNotCurrentUserProfile && (
+        <Button variant="outline-primary" onClick={sub}>Subscribe</Button>
+      )}
+      </div>
       <div id="user-profile-view-container">
         <UserCard userObj={userProfile} onUpdate={setUserProfile} />
       </div>
