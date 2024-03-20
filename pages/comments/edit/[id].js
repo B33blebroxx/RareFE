@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSingleComment, viewSinglePostComments } from '../../../api/commentsApi';
 import CommentCard from '../../../components/cards/CommentCard';
-import CommentForm from '../../../components/forms/commentForm';
+import CommentForm from '../../../components/forms/CommentForm';
 
 export default function EditComment() {
   const [editComment, setEditComment] = useState({});
