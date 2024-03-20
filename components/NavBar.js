@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -18,9 +19,10 @@ export default function NavBar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Link passHref href="/">
-          <Navbar.Brand>RARE BOOKS</Navbar.Brand>
+          <Navbar.Brand>
+            <img src="/RARE.png" alt="logo" className="nav-logo me-3" width="125" height="55" />
+          </Navbar.Brand>
         </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Link passHref href="/">
@@ -38,11 +40,15 @@ export default function NavBar() {
             <Link href={`/users/profile/${user[0]?.id}`} passHref>
               <Nav.Link>My Profile</Nav.Link>
             </Link>
-            <Button variant="outline-secondary" onClick={signOut}>
-              Sign Out
+          </Nav>
+          <div style={{ marginLeft: '10px', paddingRight: '40px' }}>
+            <SearchBar />
+          </div>
+          <Nav>
+            <Button variant="link" onClick={signOut} style={{ paddingLeft: '50%', paddingRight: '0px' }}>
+              <img src="/signout.png" alt="Sign Out" title="Sign Out" width="135" height="25" />
             </Button>
           </Nav>
-          <SearchBar />
         </Navbar.Collapse>
       </Container>
     </Navbar>
