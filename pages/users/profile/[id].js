@@ -18,6 +18,24 @@ export default function ViewUserProfileAndPosts() {
   const { id } = router.query;
   const isCurrentUserProfile = user.uid === userProfile.uid;
   const isNotCurrentUserProfile = user.uid !== userProfile.uid;
+  const [button, setButton] = useState('');
+
+  const getPosts = () => {
+    getUsersPosts(id).then(setUserPosts);
+  };
+
+  const buttonCheck = () => {
+    const checkSub = () => {
+      const subId = user[0].id;
+      const authorId = userProfile.id;
+      checkSubscription(authorId, subId);
+    };
+    if (checkSub === true) {
+      setButton('Unsubscribe');
+    } else {
+      setButton('Subscribe');
+    }
+  };
 
   const payload = {
     followerId: user[0].id,
@@ -29,26 +47,16 @@ export default function ViewUserProfileAndPosts() {
     subscribeToUser(payload);
   };
 
-  const checkSub = () => {
-    const followerId = user[0].id;
-    const authorId = userProfile.id;
-    checkSubscription(followerId, authorId);
-  };
-
-  const getPosts = () => {
-    getUsersPosts(id).then(setUserPosts);
-  };
-
   useEffect(() => {
     getSingleUser(id).then(setUserProfile);
     getPosts(id);
-    checkSub();
+    buttonCheck();
   }, [userProfile.id]);
 
   return (
     <>
       <div>{isNotCurrentUserProfile && (
-        <Button variant="outline-primary" onClick={sub}>Subscribe</Button>
+        <Button variant="outline-primary" onClick={sub}>{button}</Button>
       )}
       </div>
       <div id="user-profile-view-container">

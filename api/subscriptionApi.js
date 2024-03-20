@@ -38,8 +38,8 @@ const subscriberCount = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const checkSubscription = (followerId, authorId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/subscriptions/check/${followerId}/${authorId}`, {
+const checkSubscription = (authorId, subId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/users/${authorId}/subscribers/${subId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
