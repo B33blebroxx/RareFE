@@ -8,7 +8,7 @@ import { getUsersPosts } from '../../../api/postsApi';
 import UserCard from '../../../components/cards/UserCard';
 import { useAuth } from '../../../utils/context/authContext';
 import PostCard from '../../../components/cards/postCard';
-import { subscribeToUser } from '../../../api/subscriptionApi';
+import { checkSubscription, subscribeToUser } from '../../../api/subscriptionApi';
 
 export default function ViewUserProfileAndPosts() {
   const [userProfile, setUserProfile] = useState({});
@@ -26,8 +26,13 @@ export default function ViewUserProfileAndPosts() {
   };
 
   const sub = () => {
-    console.warn('user', user);
     subscribeToUser(payload);
+  };
+
+  const checkSub = () => {
+    const followerId = user[0].id;
+    const authorId = userProfile.id;
+    checkSubscription(followerId, authorId);
   };
 
   const getPosts = () => {
@@ -37,6 +42,7 @@ export default function ViewUserProfileAndPosts() {
   useEffect(() => {
     getSingleUser(id).then(setUserProfile);
     getPosts(id);
+    checkSub();
   }, [userProfile.id]);
 
   return (
