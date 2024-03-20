@@ -5,7 +5,7 @@ import { useAuth } from '../../utils/context/authContext';
 
 export default function UserCard({ userObj }) {
   const { user } = useAuth();
-  const isCurrentUserProfile = user.uid === userObj.uid;
+  const isCurrentUserProfile = user[0].uid === userObj.uid;
 
   return (
     <Card id="user-card">
@@ -21,8 +21,8 @@ export default function UserCard({ userObj }) {
       <Card.Body>
         {' '}
         {isCurrentUserProfile && (
-          <Link href={`/users/profile/${userObj.id}`} passHref>
-            <Button className="button" variant="outline-info">
+          <Link href={`/users/${userObj.id}`} passHref>
+            <Button className="button" variant="info">
               Edit Profile
             </Button>
           </Link>

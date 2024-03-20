@@ -38,7 +38,7 @@ function RegisterForm({ userObj }) {
     e.preventDefault();
 
     if (userObj.id) {
-      updateRareUser(formData).then(() => router.push(`/users/${user[0]?.id}`));
+      updateRareUser(formData).then(() => router.push(`/users/profile/${user[0]?.id}`));
     } else {
       const payload = { ...formData, uid: user?.uid };
       registerUser(payload).then(() => router.push(`/users/${user?.id}`));
