@@ -72,14 +72,14 @@ function ViewSinglePost() {
           </div>
         </>
       ) : (
-        <div><br />
+        <div id="postdetails"><br />
           <h2>Post Details</h2><br />
           <>
             <Card className="card-style" style={{ width: '48rem' }}>
               <Card.Img variant="top" src={post.imageUrl} />
               <Card.Body>
                 <Card.Title>{post.title}</Card.Title>
-                <Card.Text>By {post.authorDisplayName}</Card.Text>
+                <Card.Text>By {post.author}</Card.Text>
                 <Card.Text>{post.publicationDate}</Card.Text>
                 <br />
                 <Card.Text>{post.content}</Card.Text>
@@ -95,12 +95,11 @@ function ViewSinglePost() {
                       ))}
                     </div>
                   </Card>
-                ) : ''}
-
-                <Button className="editBtn m-2" variant="outline-info" onClick={viewComments}>
+                ) : ''}<br />
+                <Button id="commentbtn" variant="outline-secondary" onClick={viewComments}>
                   View Comments
                 </Button>
-                <div>Total Reactions: {count.totalReactions}</div>
+                <div><br />Total Reactions: {count.totalReactions}</div>
               </Card.Body>
             </Card>
             <br /><br />
