@@ -40,12 +40,12 @@ function PostCard({
 
 PostCard.propTypes = {
   postObj: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    publicationDate: PropTypes.string.isRequired,
-    authorDisplayName: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    id: PropTypes.number,
+    title: PropTypes.string,
+    publicationDate: PropTypes.string,
+    authorDisplayName: PropTypes.string,
+    imageUrl: PropTypes.string,
+    content: PropTypes.string,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   isUserPost: PropTypes.bool.isRequired,
