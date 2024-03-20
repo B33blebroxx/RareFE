@@ -20,12 +20,13 @@ export default function ViewUserProfileAndPosts() {
   const isNotCurrentUserProfile = user.uid !== userProfile.uid;
 
   const payload = {
-    followerId: user.Id,
-    authorId: userProfile.Id,
-    createdOn: Date.now(),
+    followerId: user[0].id,
+    authorId: userProfile.id,
+    createdOn: new Date().toISOString(),
   };
 
   const sub = () => {
+    console.warn('user', user);
     subscribeToUser(payload);
   };
 
