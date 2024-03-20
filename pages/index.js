@@ -1,42 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import { checkUser, signOut } from '../utils/auth';
+import { useRouter } from 'next/router';
+import { getSubscribedPosts } from '../api/postsApi';
 import { useAuth } from '../utils/context/authContext';
-import RegisterForm from '../components/RegisterForm';
+import PostCard from '../components/cards/postCard';
 
-function Home() {
+export default function Homepage() {
+  const [post, setPost] = useState([]);
   const { user } = useAuth();
-  const [authUser, setAuthUser] = useState();
+  const router = useRouter();
+
+  const currentUserId = user[0].id;
+
+  const subPosts = () => {
+    getSubscribedPosts(currentUserId).then(setPost);
+  };
 
   useEffect(() => {
-    checkUser(user.uid).then((data) => setAuthUser(data[0]));
-  }, [user.uid]);
-
-  const onUpdate = () => {
-    checkUser(user.uid).then((data) => setAuthUser(data));
-  };
+    subPosts(currentUserId);
+  }, [currentUserId]);
 
   return (
     <>
-      {authUser?.uid === user?.uid ? (
-        <div
-          className="text-center d-flex flex-column justify-content-center align-content-center"
-          style={{
-            height: '90vh',
-            padding: '30px',
-            maxWidth: '400px',
-            margin: '0 auto',
-          }}
-        >
-          <h1>Hello {user?.fbUser?.displayName}! </h1>
-          <p>Click the button below to logout!</p>
-          <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-            Sign Out
-          </Button>
-        </div>
-      ) : (<RegisterForm userObj={user} onUpdate={onUpdate} />)}
+      <br />
+      <h2>Sub Posts</h2><br />
+      <div id="createpost">
+        <Button
+          className="addBtn m-2"
+          variant="outline-info"
+          onClick={() => router.push('/posts/createPost')}
+        >Add a Post
+        </Button>
+      </div>
+      <div className="card-container">
+        {post.map((posts) => (
+          <PostCard key={posts.id} postObj={posts} onUpdate={subPosts} />
+        ))}
+      </div>
     </>
   );
 }
-
-export default Home;
