@@ -18,7 +18,9 @@ function PostCard({
           <br />
           <Card.Text>{postObj.content}</Card.Text>
           <Link href={`/posts/${postObj.id}`} passHref>
-            <Button id="viewbtn" className="editBtn m-2" variant="outline-secondary">View</Button>
+            <Button id="viewuser" aria-label="View" variant="secondary">
+              <img src="/viewicon.png" alt="view" title="view" style={{ width: '24px', height: '24px' }} />
+            </Button>
           </Link>
           {isUserPost && (
             <Link href={`/posts/edit/${postObj.id}`} passHref>

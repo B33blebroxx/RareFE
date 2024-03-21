@@ -162,3 +162,45 @@ justify-content: center;
   color: white;
   border-color:#484848;
 }
+
+.list-group{
+    background-color: #282828;
+    border-color: #404040;
+    border-width: 3px;
+    color: #ffffff;
+}
+
+.mini-card-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 10px
+}
+
+#mini-user-card{
+    align-items: center;
+    width: 10rem;
+    height: 20rem;
+    background-color: #282828;
+    border-color: #404040;
+    border-width: 3px;
+    color: #ffffff;
+}
+
+#mini-user-card .card-img-top {
+  height: 50%;
+  width: auto;
+  object-fit: contain;
+}
+
+.search-bar{
+  width: 15rem;
+}
+
+#edituser{
+  color: white;
+  border-color: white;
+}
