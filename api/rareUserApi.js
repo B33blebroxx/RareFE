@@ -36,4 +36,6 @@ const getAllUsers = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { updateRareUser, getSingleUser, getAllUsers };
+export {
+  updateRareUser, getSingleUser, getAllUsers,
+};
