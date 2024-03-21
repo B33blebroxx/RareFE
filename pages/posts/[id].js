@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getSinglePost } from '../../api/postsApi';
 import { viewSinglePostComments } from '../../api/commentsApi';
 import CommentCard from '../../components/cards/CommentCard';
-import { addReaction, getAPostsReactions, getReactionsTotals } from '../../api/reactionsApi';
+import { addReaction, getAllReactions, getReactionsTotals } from '../../api/reactionsApi';
 import { useAuth } from '../../utils/context/authContext';
 import CommentForm from '../../components/forms/CommentForm';
 import AllReactionsCard from '../../components/cards/AllReactionsCard';
@@ -17,7 +17,7 @@ function ViewSinglePost() {
   const { id } = router.query;
   const [post, setPost] = useState({});
   const [postDetails, setPostDetails] = useState({});
-  const [reactions, setReactions] = useState([]);
+  const [allReactions, setAllReactions] = useState([]);
   const [commentsSwitch, setCommentsSwitch] = useState(false);
   const [addOneReaction, setAddOneReaction] = useState(false);
   const [count, setCount] = useState({});
@@ -31,7 +31,7 @@ function ViewSinglePost() {
     const thisPost = await getSinglePost(id);
     const details = await viewSinglePostComments(thisPost.id);
     const reactionData = await getReactionsTotals(thisPost.id);
-    const reactionsInPost = await getAPostsReactions(thisPost.id);
+    const allOfTheReactions = await getAllReactions();
 
     if (mountedRef.current) {
       setPost(thisPost);
@@ -39,7 +39,7 @@ function ViewSinglePost() {
       setCount(reactionData);
       setCommentsSwitch(false);
       setAddOneReaction(false);
-      setReactions(reactionsInPost);
+      setAllReactions(allOfTheReactions);
     }
   };
 
@@ -141,7 +141,7 @@ function ViewSinglePost() {
 
                 {addOneReaction ? (
                   <div className="reactionsWrap">
-                    {reactions.map((reaction) => (
+                    {allReactions.map((reaction) => (
                       <AllReactionsCard onClick={handleReactionClick} reactionObj={reaction} key={reaction.id} />
                     ))}
 
