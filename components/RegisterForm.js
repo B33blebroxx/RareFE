@@ -48,7 +48,7 @@ function RegisterForm({ userObj }) {
   return (
     <div id="regform-container">
       <Form onSubmit={handleSubmit} className="regForm">
-        <br />
+        <br /><br />
         <h1>{userObj?.id ? 'Update' : 'Create'} User Profile</h1><br />
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name</Form.Label>
@@ -65,7 +65,7 @@ function RegisterForm({ userObj }) {
         <Button
           id="userbtn"
           className="profileBtn m-2"
-          variant="outline-info"
+          variant="outline-secondary"
           type="submit"
         >{userObj?.id ? 'Update' : 'Create'}
         </Button>

@@ -3,40 +3,57 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
 import PostCard from '../../components/cards/postCard';
-import { getUsersPosts } from '../../api/postsApi';
+import { getUsersPosts, deletePost } from '../../api/postsApi';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function Posts() {
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
   const { user } = useAuth();
   const router = useRouter();
 
-  const currentUserId = user[0].id;
+  useEffect(() => {
+    if (user && user[0]?.id) {
+      getUsersPosts(user[0].id).then(setPosts);
+    }
+  }, [user]);
 
-  const myPosts = () => {
-    getUsersPosts(currentUserId).then(setPost);
+  const handleEdit = (postId) => {
+    router.push(`/posts/edit/${postId}`);
   };
 
-  useEffect(() => {
-    myPosts(currentUserId);
-  }, [currentUserId]);
+  const handleDelete = (postId) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this post?');
+    if (isConfirmed) {
+      deletePost(postId).then(() => {
+        setPosts((currentPosts) => currentPosts.filter((post) => post.id !== postId));
+      }).catch((err) => {
+        console.error('Error deleting post:', err);
+      });
+    }
+  };
 
   return (
     <>
       <br />
       <h2>My Posts</h2>
-      <br />
       <div id="createpost">
         <Button
+          id="addpostbtn"
           className="addBtn m-2"
-          variant="outline-info"
+          variant="outline-secondary"
           onClick={() => router.push('/posts/createPost')}
         >Add a Post
         </Button>
       </div>
       <div className="card-container">
-        {post.map((posts) => (
-          <PostCard key={posts.id} postObj={posts} onUpdate={myPosts} />
+        {posts.map((post) => (
+          <PostCard
+            key={post.id}
+            postObj={post}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            isUserPost
+          />
         ))}
       </div>
     </>

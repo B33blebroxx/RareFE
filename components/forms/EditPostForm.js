@@ -1,53 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Form, Button } from 'react-bootstrap';
+import { getSinglePost, updatePost } from '../../api/postsApi';
 import { useAuth } from '../../utils/context/authContext';
-import { createPost } from '../../api/postsApi';
 
-const CreatePostForm = () => {
+const EditPostForm = () => {
   const [postData, setPostData] = useState({
     title: '',
     content: '',
-    category: '',
     imageUrl: '',
   });
   const { user } = useAuth();
   const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    if (id) {
+      getSinglePost(id)
+        .then((data) => {
+          setPostData({
+            title: data.title,
+            content: data.content,
+            imageUrl: data.imageUrl || '',
+          });
+        })
+        .catch((error) => {
+          console.error('Failed to fetch post for editing:', error);
+        });
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPostData({ ...postData, [name]: value });
+    setPostData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = user[0]?.id;
-
-    if (!userId) {
-      console.warn('User ID is undefined');
-      return;
-    }
-
     const payload = {
       ...postData,
-      publicationDate: new Date().toISOString(),
-      approved: true,
-      rareUserId: userId,
+      rareUserId: user[0]?.id,
     };
 
-    createPost(payload)
-      .then((newPost) => {
-        router.push(`/posts/${newPost.id}`);
+    updatePost(id, payload)
+      .then(() => {
+        router.push(`/posts/${id}`);
       })
       .catch((error) => {
-        console.error('Failed to create post', error);
+        console.error('Failed to update post:', error);
       });
   };
 
   return (
     <div className="postform-container">
       <Form onSubmit={handleSubmit} className="postForm">
-        <h1>Add Post</h1><br />
+        <h1>Edit Post</h1><br />
         <Form.Group className="mb-3">
           <Form.Label>Title</Form.Label>
           <Form.Control
@@ -60,7 +70,7 @@ const CreatePostForm = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Content:</Form.Label>
+          <Form.Label>Content</Form.Label>
           <Form.Control
             as="textarea"
             style={{ height: '100px' }}
@@ -72,7 +82,7 @@ const CreatePostForm = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Header Image URL:</Form.Label>
+          <Form.Label>Header Image URL</Form.Label>
           <Form.Control
             type="text"
             name="imageUrl"
@@ -81,12 +91,12 @@ const CreatePostForm = () => {
           />
         </Form.Group>
         <br />
-        <Button id="createpostbtn" className="addPostBtn m-2" variant="outline-secondary" type="submit">
-          Create Post
+        <Button id="editpost" className="editPostBtn m-2" variant="outline-info" type="submit">
+          Save Changes
         </Button>
       </Form>
     </div>
   );
 };
 
-export default CreatePostForm;
+export default EditPostForm;

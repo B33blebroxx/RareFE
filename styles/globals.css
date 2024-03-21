@@ -85,7 +85,7 @@ align-items: center;
 height: 75vh;
 }
 
-#createpost{
+#createpostbtn{
   width: 150px;
 }
 
@@ -118,4 +118,89 @@ width: 800px;
 align-items: center;
 display: flex;
 justify-content: center;
+}
+
+#editpost{
+  background-color: #282828;
+  border-color: #282828;
+}
+
+#deletepost{
+  background-color: #282828;
+  border-color: #282828;
+}
+
+#viewbtn{
+  color: black;
+  background-color: lightgray;
+}
+
+#viewbtn:hover {
+  background-color: #484848;
+  color: white;
+  border-color:#484848;
+}
+
+#commentbtn{
+  color: black;
+  background-color: lightgray;
+}
+
+#commentbtn:hover {
+  background-color: #484848;
+  color: white;
+  border-color:#484848;
+}
+
+#signin{
+  color: black;
+  background-color: lightgray;
+}
+
+#signin:hover{
+  background-color: #484848;
+  color: white;
+  border-color:#484848;
+}
+
+.list-group{
+    background-color: #282828;
+    border-color: #404040;
+    border-width: 3px;
+    color: #ffffff;
+}
+
+.mini-card-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  gap: 10px
+}
+
+#mini-user-card{
+    align-items: center;
+    width: 10rem;
+    height: 20rem;
+    background-color: #282828;
+    border-color: #404040;
+    border-width: 3px;
+    color: #ffffff;
+}
+
+#mini-user-card .card-img-top {
+  height: 50%;
+  width: auto;
+  object-fit: contain;
+}
+
+.search-bar{
+  width: 15rem;
+}
+
+#edituser{
+  color: white;
+  border-color: white;
 }

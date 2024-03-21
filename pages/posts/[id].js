@@ -95,7 +95,7 @@ function ViewSinglePost() {
           </div>
         </>
       ) : (
-        <div><br />
+        <div id="postdetails"><br />
           <h2>Post Details</h2><br />
           <>
             <Card className="card-style" style={{ width: '48rem' }}>

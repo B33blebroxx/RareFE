@@ -4,18 +4,18 @@ import Link from 'next/link';
 
 export default function MiniUserCard({ userObj }) {
   return (
-    <Card id="user-card">
-      <Card.Img id="user-card-img" variant="top" src={userObj.profileImageUrl} />
+    <Card id="mini-user-card">
+      <Card.Img variant="top" src={userObj.profileImageUrl} alt="User profile picture" />
       <Card.Body>
-        <Card.Title id="user-card-title">{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
+        <Card.Title>{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
       </Card.Body>
-      <Card.Body>
+      <Card.Footer>
         <Link href={`/users/profile/${userObj.id}`} passHref>
-          <Button className="button" variant="outline-info">
-            View Profile
+          <Button id="viewuser" aria-label="View" variant="secondary">
+            <img src="/viewicon.png" alt="view" title="view" style={{ width: '24px', height: '24px' }} />
           </Button>
         </Link>
-      </Card.Body>
+      </Card.Footer>
     </Card>
   );
 }
