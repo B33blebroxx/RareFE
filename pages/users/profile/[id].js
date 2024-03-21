@@ -8,7 +8,7 @@ import { getUsersPosts } from '../../../api/postsApi';
 import UserCard from '../../../components/cards/UserCard';
 import { useAuth } from '../../../utils/context/authContext';
 import PostCard from '../../../components/cards/postCard';
-import { getSubscription, subscribeToUser, unsubscribeFromUser } from '../../../api/subscriptionApi';
+import { getAuthorsSubscriptions, subscribeToUser, unsubscribeFromUser } from '../../../api/subscriptionApi';
 
 export default function ViewUserProfileAndPosts() {
   const [userProfile, setUserProfile] = useState({});
@@ -18,22 +18,30 @@ export default function ViewUserProfileAndPosts() {
   const { id } = router.query;
   const isCurrentUserProfile = user.uid === userProfile.uid;
   const isNotCurrentUserProfile = user.uid !== userProfile.uid;
+  const [subscribers, setSubscribers] = useState([]);
+  const [button, setButton] = useState('');
 
   const getPosts = () => {
     getUsersPosts(id).then(setUserPosts);
   };
 
+  const getSubs = () => {
+    getAuthorsSubscriptions(id).then(setSubscribers);
+  };
+
   const checkSub = () => {
-    const subId = user[0].id;
-    const authorId = id;
-    getSubscription(authorId, subId);
+    const subCheck = subscribers.find((s) => s.followerId === user[0].id);
+    if (subCheck == null) {
+      setButton('Subscribe');
+    } else {
+      setButton('Unsubscribe');
+    }
   };
 
   const handleClick = () => {
-    const subId = user[0].id;
-    const authorId = id;
+    const subCheck = subscribers.find((s) => s.followerId === user[0].id);
 
-    if (checkSub === true) {
+    if (subCheck === undefined) {
       const payload = {
         followerId: user[0].id,
         authorId: userProfile.id,
@@ -41,20 +49,22 @@ export default function ViewUserProfileAndPosts() {
       };
       subscribeToUser(payload);
     } else {
+      const subId = user[0].id;
+      const authorId = userProfile.id;
       unsubscribeFromUser(authorId, subId);
     }
   };
 
   useEffect(() => {
     getSingleUser(id).then(setUserProfile);
-    getPosts(id);
+    getSubs();
     checkSub();
-  }, [userProfile.id, checkSub()]);
+  }, [userProfile.id]);
 
   return (
     <>
       <div>{isNotCurrentUserProfile && (
-        <Button variant="outline-primary" onClick={handleClick}>Subscribe</Button>
+        <Button variant="outline-primary" onClick={handleClick}>{button}</Button>
       )}
       </div>
       <div id="user-profile-view-container">

@@ -22,7 +22,7 @@ const unsubscribeFromUser = (authorId, subId) => new Promise((resolve, reject) =
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
+    // .then((response) => response.json())
     .then((data) => resolve(data))
     .catch(reject);
 });
@@ -38,17 +38,18 @@ const subscriberCount = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getSubscription = (authorId, subId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/users/${authorId}/subscribers/${subId}`, {
+const getAuthorsSubscriptions = (authorId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/subscriptions/${authorId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((response) => response.json())
-    .then((data) => resolve(data))
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
     .catch(reject);
 });
 
 export {
-  subscribeToUser, unsubscribeFromUser, subscriberCount, getSubscription,
+  subscribeToUser, unsubscribeFromUser, subscriberCount, getAuthorsSubscriptions,
 };
