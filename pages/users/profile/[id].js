@@ -8,7 +8,7 @@ import { getUsersPosts } from '../../../api/postsApi';
 import UserCard from '../../../components/cards/UserCard';
 import { useAuth } from '../../../utils/context/authContext';
 import PostCard from '../../../components/cards/postCard';
-import { checkSubscription, subscribeToUser } from '../../../api/subscriptionApi';
+import { getSubscription, subscribeToUser, unsubscribeFromUser } from '../../../api/subscriptionApi';
 
 export default function ViewUserProfileAndPosts() {
   const [userProfile, setUserProfile] = useState({});
@@ -18,45 +18,43 @@ export default function ViewUserProfileAndPosts() {
   const { id } = router.query;
   const isCurrentUserProfile = user.uid === userProfile.uid;
   const isNotCurrentUserProfile = user.uid !== userProfile.uid;
-  const [button, setButton] = useState('');
 
   const getPosts = () => {
     getUsersPosts(id).then(setUserPosts);
   };
 
-  const buttonCheck = () => {
-    const checkSub = () => {
-      const subId = user[0].id;
-      const authorId = userProfile.id;
-      checkSubscription(authorId, subId);
-    };
+  const checkSub = () => {
+    const subId = user[0].id;
+    const authorId = id;
+    getSubscription(authorId, subId);
+  };
+
+  const handleClick = () => {
+    const subId = user[0].id;
+    const authorId = id;
+
     if (checkSub === true) {
-      setButton('Unsubscribe');
-    } else if (checkSub === false) {
-      setButton('Subscribe');
+      const payload = {
+        followerId: user[0].id,
+        authorId: userProfile.id,
+        createdOn: new Date().toISOString(),
+      };
+      subscribeToUser(payload);
+    } else {
+      unsubscribeFromUser(authorId, subId);
     }
-  };
-
-  const payload = {
-    followerId: user[0].id,
-    authorId: userProfile.id,
-    createdOn: new Date().toISOString(),
-  };
-
-  const sub = () => {
-    subscribeToUser(payload);
   };
 
   useEffect(() => {
     getSingleUser(id).then(setUserProfile);
     getPosts(id);
-    buttonCheck();
-  }, [userProfile.id]);
+    checkSub();
+  }, [userProfile.id, checkSub()]);
 
   return (
     <>
       <div>{isNotCurrentUserProfile && (
-        <Button variant="outline-primary" onClick={sub}>{button}</Button>
+        <Button variant="outline-primary" onClick={handleClick}>Subscribe</Button>
       )}
       </div>
       <div id="user-profile-view-container">

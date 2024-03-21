@@ -15,8 +15,8 @@ const subscribeToUser = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const unsubscribeFromUser = (subId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/subscriptions/${subId}`, {
+const unsubscribeFromUser = (authorId, subId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/users/${authorId}/subscribers/${subId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const subscriberCount = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const checkSubscription = (authorId, subId) => new Promise((resolve, reject) => {
+const getSubscription = (authorId, subId) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/users/${authorId}/subscribers/${subId}`, {
     method: 'GET',
     headers: {
@@ -50,5 +50,5 @@ const checkSubscription = (authorId, subId) => new Promise((resolve, reject) => 
 });
 
 export {
-  subscribeToUser, unsubscribeFromUser, subscriberCount, checkSubscription,
+  subscribeToUser, unsubscribeFromUser, subscriberCount, getSubscription,
 };
