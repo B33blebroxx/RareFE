@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap';
 function AllReactionsCard({ onClick, reactionObj }) {
   const handleOnClick = () => {
     if (onClick) {
-      onClick(reactionObj.reactId);
+      onClick(reactionObj.id);
     }
   };
   return (
@@ -23,7 +23,7 @@ function AllReactionsCard({ onClick, reactionObj }) {
         onClick={handleOnClick}
       >
         <div>
-          <Card.Img variant="top" src={reactionObj.imageUrl} alt={reactionObj.label} style={{ cursor: 'pointer' }} />
+          <Card.Img variant="top" src={reactionObj.image} alt={reactionObj.label} style={{ cursor: 'pointer' }} />
         </div>
       </Card>
     </>
@@ -32,9 +32,9 @@ function AllReactionsCard({ onClick, reactionObj }) {
 
 AllReactionsCard.propTypes = {
   reactionObj: PropTypes.shape({
-    reactId: PropTypes.number,
+    id: PropTypes.number,
     label: PropTypes.string,
-    imageUrl: PropTypes.string,
+    image: PropTypes.string,
     count: PropTypes.number,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
