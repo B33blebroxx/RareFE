@@ -25,7 +25,6 @@ export default function Homepage() {
         }
       });
     }
-    console.log(user[0]);
   }, [user]);
 
   if (!isRegistered) {
