@@ -23,31 +23,33 @@ export default function ViewUserProfileAndPosts() {
   useEffect(() => {
     getSingleUser(id).then(setUserProfile);
     getPosts(id);
-  }, [userProfile.id]);
+  }, [id]);
 
   return (
     <>
-      <div id="user-profile-view-container">
+      <div className="card-container">
+        <h2>Profile</h2><br />
         <UserCard userObj={userProfile} onUpdate={setUserProfile} />
       </div>
       <hr
         style={{
-          backgroundColor: 'black',
-          color: 'black',
-          borderColor: 'black',
-          height: '1px',
+          backgroundColor: 'white',
+          color: 'white',
+          borderColor: 'white',
+          height: '2px',
         }}
       />
-      <div id="create-post-btn">{isCurrentUserProfile && (
-      <Link passHref href="/posts/createPost">
-        <Button variant="outline-primary">Create Post</Button>
-      </Link>
-      )}
-      </div>
-      <div id="post-view-container">
+
+      <div className="card-container">
+        <h2>Posts</h2><br />
         {userPosts.map((post) => (
           <PostCard key={post.id} postObj={post} onUpdate={getPosts} />
-        ))}
+        ))}<br />
+        {isCurrentUserProfile && (
+        <Link passHref href="/posts/createPost">
+          <Button variant="outline-primary">Create New Post</Button>
+        </Link>
+        )}
       </div>
     </>
   );

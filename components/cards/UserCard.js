@@ -8,22 +8,22 @@ export default function UserCard({ userObj }) {
   const isCurrentUserProfile = user.uid === userObj.uid;
 
   return (
-    <Card id="user-card">
+    <Card className="card-style" style={{ width: '48rem' }}>
       <Card.Img id="user-card-img" variant="top" src={userObj.profileImageUrl} />
       <Card.Body>
         <Card.Title id="user-card-title">{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
         <Card.Text>Bio: {userObj.bio}</Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
-        <ListGroup.Item>Email: {userObj.email}</ListGroup.Item>
-        <ListGroup.Item>Created On : {userObj.createdOn}</ListGroup.Item>
+        <ListGroup.Item className="list-group">Email: {userObj.email}</ListGroup.Item>
+        <ListGroup.Item className="list-group">Created On : {userObj.createdOn}</ListGroup.Item>
       </ListGroup>
       <Card.Body>
         {' '}
         {isCurrentUserProfile && (
           <Link href={`/users/${userObj.id}`} passHref>
-            <Button className="button" variant="info">
-              Edit Profile
+            <Button id="edituser" aria-label="Edit" variant="outline-info">
+              <img src="/editicon.png" alt="Edit" title="Edit" style={{ width: '24px', height: '24px' }} />
             </Button>
           </Link>
         )}{' '}
