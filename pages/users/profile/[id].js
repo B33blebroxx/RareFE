@@ -31,7 +31,7 @@ export default function ViewUserProfileAndPosts() {
 
   const checkSub = () => {
     const subCheck = subscribers.find((s) => s.followerId === user[0].id);
-    if (subCheck == null) {
+    if (subCheck === undefined) {
       setButton('Subscribe');
     } else {
       setButton('Unsubscribe');
@@ -61,6 +61,7 @@ export default function ViewUserProfileAndPosts() {
     getSingleUser(id).then(setUserProfile);
     getSubs();
     checkSub();
+    handleClick();
   }, [id]);
 
   return (
