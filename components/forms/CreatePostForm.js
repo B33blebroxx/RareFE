@@ -25,6 +25,7 @@ const CreatePostForm = () => {
 
     if (!userId) {
       console.warn('User ID is undefined');
+      console.warn(user[0]);
       return;
     }
 

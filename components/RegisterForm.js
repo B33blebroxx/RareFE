@@ -36,12 +36,20 @@ function RegisterForm({ userObj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const filteredFormData = { ...formData };
+    if (!filteredFormData.id) {
+      delete filteredFormData.id;
+    } else {
+      filteredFormData.id = parseInt(filteredFormData.id, 10);
+    }
 
     if (userObj.id) {
-      updateRareUser(formData).then(() => router.push(`/users/profile/${user[0]?.id}`));
+      updateRareUser(filteredFormData).then(() => router.push(`/users/profile/${userObj?.id}`));
     } else {
-      const payload = { ...formData, uid: user?.uid };
-      registerUser(payload).then(() => router.push(`/users/${user?.id}`));
+      const payload = { ...filteredFormData, uid: user?.uid };
+      registerUser(payload).then((response) => {
+        router.push(`/users/profile/${response.id}`);
+      });
     }
   };
 
