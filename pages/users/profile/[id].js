@@ -48,10 +48,12 @@ export default function ViewUserProfileAndPosts() {
         createdOn: new Date().toISOString(),
       };
       subscribeToUser(payload);
+      setButton('Unsubscribe');
     } else {
       const subId = user[0].id;
       const authorId = userProfile.id;
       unsubscribeFromUser(authorId, subId);
+      setButton('Subscribe');
     }
   };
 
