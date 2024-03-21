@@ -36,20 +36,18 @@ function RegisterForm({ userObj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Remove the id from the payload if it's an empty string (new user)
     const filteredFormData = { ...formData };
     if (!filteredFormData.id) {
       delete filteredFormData.id;
     } else {
-      filteredFormData.id = parseInt(filteredFormData.id, 10); // Ensure id is an integer
+      filteredFormData.id = parseInt(filteredFormData.id, 10);
     }
 
     if (userObj.id) {
-      updateRareUser(filteredFormData).then(() => router.push(`/users/profile/${user[0]?.id}`));
+      updateRareUser(filteredFormData).then(() => router.push(`/users/profile/${userObj?.id}`));
     } else {
       const payload = { ...filteredFormData, uid: user?.uid };
       registerUser(payload).then((response) => {
-        // Adjust redirect based on your application's routing and API response
         router.push(`/users/profile/${response.id}`);
       });
     }

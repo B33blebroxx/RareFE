@@ -21,7 +21,7 @@ const CreatePostForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = user[0]?.id;
+    const userId = user?.id;
 
     if (!userId) {
       console.warn('User ID is undefined');

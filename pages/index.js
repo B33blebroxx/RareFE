@@ -5,7 +5,7 @@ import { getSubscribedPosts } from '../api/postsApi';
 import { useAuth } from '../utils/context/authContext';
 import PostCard from '../components/cards/postCard';
 import RegisterForm from '../components/RegisterForm';
-import { checkUser } from '../utils/auth'; // Ensure this path is correct
+import { checkUser } from '../utils/auth';
 
 export default function Homepage() {
   const [post, setPost] = useState([]);
@@ -25,6 +25,7 @@ export default function Homepage() {
         }
       });
     }
+    console.log(user[0]);
   }, [user]);
 
   if (!isRegistered) {

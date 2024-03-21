@@ -9,9 +9,9 @@ export default function UserCard({ userObj }) {
 
   return (
     <Card className="card-style" style={{ width: '48rem' }}>
-      <Card.Img id="user-card-img" variant="top" src={userObj.profileImageUrl} />
+      <Card.Img variant="top" src={userObj.profileImageUrl} />
       <Card.Body>
-        <Card.Title id="user-card-title">{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
+        <Card.Title>{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
         <Card.Text>Bio: {userObj.bio}</Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
