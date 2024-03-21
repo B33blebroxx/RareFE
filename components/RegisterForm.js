@@ -36,19 +36,29 @@ function RegisterForm({ userObj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Remove the id from the payload if it's an empty string (new user)
+    const filteredFormData = { ...formData };
+    if (!filteredFormData.id) {
+      delete filteredFormData.id;
+    } else {
+      filteredFormData.id = parseInt(filteredFormData.id, 10); // Ensure id is an integer
+    }
 
     if (userObj.id) {
-      updateRareUser(formData).then(() => router.push(`/users/profile/${user[0]?.id}`));
+      updateRareUser(filteredFormData).then(() => router.push(`/users/profile/${user[0]?.id}`));
     } else {
-      const payload = { ...formData, uid: user?.uid };
-      registerUser(payload).then(() => router.push(`/users/${user?.id}`));
+      const payload = { ...filteredFormData, uid: user?.uid };
+      registerUser(payload).then((response) => {
+        // Adjust redirect based on your application's routing and API response
+        router.push(`/users/profile/${response.id}`);
+      });
     }
   };
 
   return (
     <div id="regform-container">
       <Form onSubmit={handleSubmit} className="regForm">
-        <br />
+        <br /><br />
         <h1>{userObj?.id ? 'Update' : 'Create'} User Profile</h1><br />
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>First Name</Form.Label>
@@ -65,7 +75,7 @@ function RegisterForm({ userObj }) {
         <Button
           id="userbtn"
           className="profileBtn m-2"
-          variant="outline-info"
+          variant="outline-secondary"
           type="submit"
         >{userObj?.id ? 'Update' : 'Create'}
         </Button>

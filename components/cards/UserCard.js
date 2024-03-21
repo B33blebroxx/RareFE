@@ -5,7 +5,7 @@ import { useAuth } from '../../utils/context/authContext';
 
 export default function UserCard({ userObj }) {
   const { user } = useAuth();
-  const isCurrentUserProfile = user[0].uid === userObj.uid;
+  const isCurrentUserProfile = user.uid === userObj.uid;
 
   return (
     <Card id="user-card">

@@ -1,41 +1,52 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { Button } from 'react-bootstrap';
 import { getSubscribedPosts } from '../api/postsApi';
 import { useAuth } from '../utils/context/authContext';
 import PostCard from '../components/cards/postCard';
+import RegisterForm from '../components/RegisterForm';
+import { checkUser } from '../utils/auth'; // Ensure this path is correct
 
 export default function Homepage() {
   const [post, setPost] = useState([]);
   const { user } = useAuth();
   const router = useRouter();
-
-  const currentUserId = user[0].id;
-
-  const subPosts = () => {
-    getSubscribedPosts(currentUserId).then(setPost);
-  };
+  const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
-    subPosts(currentUserId);
-  }, [currentUserId]);
+    if (user && user[0] && user[0].id) {
+      checkUser(user[0].id).then((response) => {
+        if (response && !response.error) {
+          setIsRegistered(true);
+          const currentUserId = user[0].id;
+          getSubscribedPosts(currentUserId).then(setPost);
+        } else {
+          setIsRegistered(false);
+        }
+      });
+    }
+  }, [user]);
+
+  if (!isRegistered) {
+    return <RegisterForm />;
+  }
 
   return (
     <>
       <br />
-      <h2>Sub Posts</h2><br />
+      <h2>Sub Posts</h2>
       <div id="createpost">
         <Button
           className="addBtn m-2"
-          variant="outline-info"
+          variant="outline-secondary"
           onClick={() => router.push('/posts/createPost')}
-        >Add a Post
+        >
+          Add a Post
         </Button>
       </div>
       <div className="card-container">
         {post.map((posts) => (
-          <PostCard key={posts.id} postObj={posts} onUpdate={subPosts} />
+          <PostCard key={posts.id} postObj={posts} onUpdate={() => getSubscribedPosts(user[0].id)} />
         ))}
       </div>
     </>
