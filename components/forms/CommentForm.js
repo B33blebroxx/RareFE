@@ -18,14 +18,6 @@ export default function CommentForm({ commentObj, postObj, onUpdate }) {
     if (commentObj.id) setCommentContent(commentObj);
   }, [commentObj, user]);
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setCommentContent((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
