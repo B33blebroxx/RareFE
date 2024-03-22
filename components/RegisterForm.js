@@ -8,20 +8,18 @@ import { registerUser } from '../utils/auth'; // Update with path to registerUse
 import { useAuth } from '../utils/context/authContext';
 import { updateRareUser } from '../api/rareUserApi';
 
-const initialState = {
-  id: '',
-  firstName: '',
-  lastName: '',
-  bio: '',
-  profileImageUrl: '',
-  email: '',
-  createdOn: new Date().toISOString(),
-  active: true,
-};
 function RegisterForm({ userObj }) {
   const router = useRouter();
   const { user } = useAuth();
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState({
+    firstName: userObj.firstName || '',
+    lastName: userObj.lastName || '',
+    bio: userObj.bio || '',
+    profileImageUrl: userObj.profileImageUrl || '',
+    email: userObj.email || '',
+    createdOn: userObj.createdOn || new Date().toISOString(),
+    active: userObj.active !== undefined ? userObj.active : true,
+  });
 
   useEffect(() => {
     if (userObj?.id) setFormData(userObj);
@@ -98,7 +96,7 @@ RegisterForm.propTypes = {
 };
 
 RegisterForm.defaultProps = {
-  userObj: initialState,
+  userObj: {},
 };
 
 export default RegisterForm;
