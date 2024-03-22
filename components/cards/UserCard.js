@@ -23,7 +23,7 @@ export default function UserCard({ userObj }) {
         {' '}
         {isCurrentUserProfile && (
           <Link href={`/users/${userObj.id}`} passHref>
-            <Button id="edituser" aria-label="Edit" variant="outline-info">
+            <Button id="edituser" aria-label="Edit" style={{ backgroundColor: '#282828', borderColor: '#282828' }}>
               <img src="/editicon.png" alt="Edit" title="Edit" style={{ width: '24px', height: '24px' }} />
             </Button>
           </Link>

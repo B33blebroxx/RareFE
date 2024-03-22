@@ -23,6 +23,7 @@ export default function NavBar() {
             <img src="/RARE.png" alt="logo" className="nav-logo me-3" width="125" height="55" />
           </Navbar.Brand>
         </Link>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Link passHref href="/">

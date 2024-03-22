@@ -87,14 +87,42 @@ height: 75vh;
 
 #createpostbtn{
   width: 150px;
+  color: white;
+  background-color:#404040;
+}
+
+#createpostbtn:hover{
+  background-color: rgb(119, 118, 118);
+}
+
+#editpostbtn{
+  width: 150px;
+  color: white;
+  background-color:#404040;
+}
+
+#editpostbtn:hover{
+  background-color: rgb(119, 118, 118);
 }
 
 #commentbtn{
   width: 150px;
+  color: white;
+  background-color:#404040;
+}
+
+#commentbtn:hover{
+  background-color: rgb(119, 118, 118);
 }
 
 #userbtn{
   width:150px;
+  color: white;
+  background-color:#404040;
+}
+
+#userbtn:hover{
+  background-color: rgb(119, 118, 118);
 }
 
 .userForm{
@@ -125,9 +153,26 @@ justify-content: center;
   border-color: #282828;
 }
 
+#editpost:hover{
+  background-color: rgb(98, 98, 98);
+}
+
+#viewuser{
+  background-color: #282828;
+  border-color: #282828;
+}
+
+#viewuser:hover{
+  background-color: rgb(98, 98, 98);
+}
+
 #deletepost{
   background-color: #282828;
   border-color: #282828;
+}
+
+#deletepost:hover{
+  background-color: rgb(98, 98, 98);
 }
 
 #viewbtn{
@@ -141,16 +186,8 @@ justify-content: center;
   border-color:#484848;
 }
 
-#commentbtn{
-  color: black;
-  background-color: lightgray;
-}
-
-#commentbtn:hover {
-  background-color: #484848;
-  color: white;
-  border-color:#484848;
-}
+#edituser:hover {
+  background-color: rgb(98, 98, 98);}
 
 #signin{
   color: black;
@@ -203,4 +240,22 @@ justify-content: center;
 #edituser{
   color: white;
   border-color: white;
+}
+
+#viewcommentbtn{
+  color: lightgray;
+  background-color:#404040;
+}
+
+#addreactionbtn{
+  color: lightgray;
+  background-color:#404040;
+}
+
+#viewcommentbtn:hover{
+  background-color: rgb(119, 118, 118);
+}
+
+#addreactionbtn:hover{
+  background-color: rgb(119, 118, 118);
 }
