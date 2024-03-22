@@ -27,30 +27,33 @@ export default function ViewUserProfileAndPosts() {
   };
 
   const checkSub = () => {
-    const subCheck = subscribers.find((s) => s === user[0].id);
-    if (subCheck === undefined) {
-      setButton('Subscribe');
-    } else {
-      setButton('Unsubscribe');
-    }
+    const isSubscribed = subscribers.some((subId) => subId === user[0].id);
+    setButton(isSubscribed ? 'Unsubscribe' : 'Subscribe');
   };
 
   const handleClick = () => {
-    const subCheck = subscribers.find((s) => s === user[0].id);
+    const isSubscribed = subscribers.some((subId) => subId === user[0].id);
 
-    if (subCheck === undefined) {
+    if (!isSubscribed) {
       const payload = {
         followerId: user[0].id,
         authorId: Number(id),
         createdOn: new Date().toISOString(),
       };
-      subscribeToUser(payload);
-      router.reload();
+      subscribeToUser(payload).then(() => {
+        setSubscribers((subs) => [...subs, user[0].id]);
+        setButton('Unsubscribe');
+        getSingleUser(id).then(setUserProfile);
+        getUsersPosts(id).then(setUserPosts);
+      });
     } else {
       const subId = user[0].id;
-      const authorId = Number(id);
-      unsubscribeFromUser(authorId, subId);
-      router.reload();
+      unsubscribeFromUser(Number(id), subId).then(() => {
+        setSubscribers((subs) => subs.filter((sub) => sub !== subId));
+        setButton('Subscribe');
+        getSingleUser(id).then(setUserProfile);
+        getUsersPosts(id).then(setUserPosts);
+      });
     }
   };
 
