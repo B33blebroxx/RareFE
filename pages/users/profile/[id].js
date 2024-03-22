@@ -26,12 +26,13 @@ export default function ViewUserProfileAndPosts() {
   };
 
   const getSubs = () => {
-    getAuthorsSubscriptions(id).then(setSubscribers);
+    const authorId = Number(id);
+    getAuthorsSubscriptions(authorId).then(setSubscribers);
   };
 
   const checkSub = () => {
-    const subCheck = subscribers.find((s) => s.followerId === user[0].id);
-    if (subCheck === undefined) {
+    const subCheck = subscribers.includes((s) => s === user[0].id);
+    if (subCheck === false) {
       setButton('Subscribe');
     } else {
       setButton('Unsubscribe');
@@ -39,29 +40,28 @@ export default function ViewUserProfileAndPosts() {
   };
 
   const handleClick = () => {
-    const subCheck = subscribers.find((s) => s.followerId === user[0].id);
+    const subCheck = subscribers.includes((s) => s === user[0].id);
 
-    if (subCheck === undefined) {
+    if (subCheck === false) {
       const payload = {
         followerId: user[0].id,
-        authorId: userProfile.id,
+        authorId: Number(id),
         createdOn: new Date().toISOString(),
       };
       subscribeToUser(payload);
-      setButton('Unsubscribe');
+      router.push(`/users/profile/${id}`);
     } else {
       const subId = user[0].id;
-      const authorId = userProfile.id;
+      const authorId = Number(id);
       unsubscribeFromUser(authorId, subId);
-      setButton('Subscribe');
+      router.push(`/users/profile/${id}`);
     }
   };
 
   useEffect(() => {
     getSingleUser(id).then(setUserProfile);
-    getSubs();
+    getSubs(id);
     checkSub();
-    handleClick();
   }, [id]);
 
   return (

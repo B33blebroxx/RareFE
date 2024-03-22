@@ -46,7 +46,9 @@ const getAuthorsSubscriptions = (authorId) => new Promise((resolve, reject) => {
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(Object.values(data)))
+    .then((data) => {
+      resolve(Object.values(data));
+    })
     .catch(reject);
 });
 
