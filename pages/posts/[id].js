@@ -44,7 +44,7 @@ function ViewSinglePost() {
     }
   };
 
-  const isUserPost = user && post.AuthorId === user.id;
+  const isUserPost = user && post.rareUserId === user[0].id;
 
   const handleEdit = () => {
     router.push(`/posts/edit/${id}`);

@@ -9,19 +9,20 @@ const subscribeToUser = (payload) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
-  }).then((response) => response.json())
+  })
+    .then((response) => response.json())
     .then((data) => resolve(data))
     .catch(reject);
 });
 
-const unsubscribeFromUser = (subId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/subscriptions/${subId}`, {
+const unsubscribeFromUser = (authorId, subId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/users/${authorId}/subscribers/${subId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
   })
-    .then((response) => response.json())
+    // .then((response) => response.json())
     .then((data) => resolve(data))
     .catch(reject);
 });
@@ -37,4 +38,18 @@ const subscriberCount = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { subscribeToUser, unsubscribeFromUser, subscriberCount };
+const getAuthorsSubscriptions = (authorId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/subscriptions/${authorId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+export {
+  subscribeToUser, unsubscribeFromUser, subscriberCount, getAuthorsSubscriptions,
+};

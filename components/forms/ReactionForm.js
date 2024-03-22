@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, FormGroup } from 'react-bootstrap';

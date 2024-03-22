@@ -8,6 +8,9 @@ import { getUsersPosts, deletePost } from '../../../api/postsApi';
 import UserCard from '../../../components/cards/UserCard';
 import { useAuth } from '../../../utils/context/authContext';
 import PostCard from '../../../components/cards/postCard';
+import {
+  getAuthorsSubscriptions, subscribeToUser, subscriberCount, unsubscribeFromUser,
+} from '../../../api/subscriptionApi';
 
 export default function ViewUserProfileAndPosts() {
   const [userProfile, setUserProfile] = useState({});
@@ -16,12 +19,61 @@ export default function ViewUserProfileAndPosts() {
   const router = useRouter();
   const { id } = router.query;
   const isCurrentUserProfile = user.uid === userProfile.uid;
+  const isNotCurrentUserProfile = user.uid !== userProfile.uid;
+  const [subscribers, setSubscribers] = useState([]);
+  const [button, setButton] = useState('');
+  const [subCount, setSubCount] = useState(0);
+
+  const getSubs = () => {
+    const authorId = Number(id);
+    getAuthorsSubscriptions(authorId).then(setSubscribers);
+  };
+
+  const totalSubs = () => {
+    subscriberCount(id).then(setSubCount);
+  };
+
+  const checkSub = () => {
+    const isSubscribed = subscribers.some((subId) => subId === user[0].id);
+    setButton(isSubscribed ? 'Unsubscribe' : 'Subscribe');
+  };
+
+  const handleClick = () => {
+    const isSubscribed = subscribers.some((subId) => subId === user[0].id);
+
+    if (!isSubscribed) {
+      const payload = {
+        followerId: user[0].id,
+        authorId: Number(id),
+        createdOn: new Date().toISOString(),
+      };
+      subscribeToUser(payload).then(() => {
+        setSubscribers((subs) => [...subs, user[0].id]);
+        setSubCount((count) => count + 1);
+        setButton('Unsubscribe');
+        getSingleUser(id).then(setUserProfile);
+        getUsersPosts(id).then(setUserPosts);
+      });
+    } else {
+      const subId = user[0].id;
+      unsubscribeFromUser(Number(id), subId).then(() => {
+        setSubscribers((subs) => subs.filter((sub) => sub !== subId));
+        setSubCount((count) => count - 1);
+        setButton('Subscribe');
+        getSingleUser(id).then(setUserProfile);
+        getUsersPosts(id).then(setUserPosts);
+      });
+    }
+  };
 
   useEffect(() => {
     if (id) {
       getSingleUser(id).then(setUserProfile);
       getUsersPosts(id).then(setUserPosts);
     }
+    getSubs();
+    checkSub();
+    totalSubs();
   }, [id]);
 
   const handleDelete = (postId) => {
@@ -53,7 +105,11 @@ export default function ViewUserProfileAndPosts() {
           height: '2px',
         }}
       />
-
+      <div className="card-container">{isNotCurrentUserProfile && (
+        <Button variant="outline-primary" onClick={handleClick}>{button}</Button>
+      )}
+        <h3>Subscribers: {subCount}</h3>
+      </div>
       <div className="card-container">
         <h2>Posts</h2><br />
         {userPosts.map((post) => (
