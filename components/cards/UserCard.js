@@ -6,13 +6,13 @@ import { useAuth } from '../../utils/context/authContext';
 
 export default function UserCard({ userObj }) {
   const { user } = useAuth();
-  const isCurrentUserProfile = user[0].uid === userObj.uid;
+  const isCurrentUserProfile = user.uid === userObj.uid;
 
   return (
     <Card className="card-style" style={{ width: '48rem' }}>
-      <Card.Img id="user-card-img" variant="top" src={userObj.profileImageUrl} />
+      <Card.Img variant="top" src={userObj.profileImageUrl} />
       <Card.Body>
-        <Card.Title id="user-card-title">{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
+        <Card.Title>{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
         <Card.Text>Bio: {userObj.bio}</Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
