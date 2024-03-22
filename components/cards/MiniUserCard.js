@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Link from 'next/link';

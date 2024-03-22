@@ -57,6 +57,7 @@ const EditPostForm = () => {
   return (
     <div className="postform-container">
       <Form onSubmit={handleSubmit} className="postForm">
+        <br />
         <h1>Edit Post</h1><br />
         <Form.Group className="mb-3">
           <Form.Label>Title</Form.Label>
@@ -91,7 +92,7 @@ const EditPostForm = () => {
           />
         </Form.Group>
         <br />
-        <Button id="editpost" className="editPostBtn m-2" variant="outline-info" type="submit">
+        <Button id="editpostbtn" className="editPostBtn m-2" variant="outline-secondary" type="submit">
           Save Changes
         </Button>
       </Form>
