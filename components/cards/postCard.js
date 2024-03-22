@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import Link from 'next/link';
 
 function PostCard({
-  postObj, onDelete, isUserPost,
+  postObj, onDelete, onEdit, isUserPost,
 }) {
   return (
     <>
@@ -18,21 +18,28 @@ function PostCard({
           <br />
           <Card.Text>{postObj.content}</Card.Text>
           <Link href={`/posts/${postObj.id}`} passHref>
-            <Button id="viewuser" aria-label="View" variant="secondary">
-              <img src="/viewicon.png" alt="view" title="view" style={{ width: '24px', height: '24px' }} />
+            <Button id="viewuser" aria-label="View">
+              <img src="/view2.png" alt="view" title="view" style={{ width: '24px', height: '24px' }} />
             </Button>
           </Link>
           {isUserPost && (
-            <Link href={`/posts/edit/${postObj.id}`} passHref>
-              <Button id="editpost" aria-label="Edit">
-                <img src="/editicon.png" alt="Edit" title="Edit" style={{ width: '24px', height: '24px' }} />
-              </Button>
-            </Link>
+          <Button
+            id="editpost"
+            aria-label="Edit"
+            variant="secondary"
+            onClick={() => onEdit(postObj.id)}
+          >
+            <img src="/editicon.png" alt="Edit" title="Edit" style={{ width: '24px', height: '24px' }} />
+          </Button>
           )}
           {isUserPost && (
-            <Button id="deletepost" onClick={() => onDelete(postObj.id)} aria-label="Delete">
-              <img src="/deleteicon.png" alt="Delete" title="Delete" style={{ width: '24px', height: '24px' }} />
-            </Button>
+          <Button
+            id="deletepost"
+            onClick={() => onDelete(postObj.id)}
+            aria-label="Delete"
+          >
+            <img src="/deleteicon.png" alt="Delete" title="Delete" style={{ width: '24px', height: '24px' }} />
+          </Button>
           )}
         </Card.Body>
       </Card>
@@ -50,6 +57,7 @@ PostCard.propTypes = {
     content: PropTypes.string,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   isUserPost: PropTypes.bool.isRequired,
 };
 

@@ -8,7 +8,6 @@ const EditPostPage = () => {
 
   return (
     <div>
-      <h1>Edit Post</h1>
       {id ? <EditPostForm postId={id} /> : <p>Loading...</p>}
     </div>
   );
