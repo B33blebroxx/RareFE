@@ -61,8 +61,8 @@ PostCard.propTypes = {
   isUserPost: PropTypes.bool,
 };
 PostCard.defaultProps = {
-  onDelete: null, // or () => {} if you want to define a no-op function
-  onEdit: null, // or () => {} as above
-  isUserPost: false, // Assuming false as default, adjust according to your logic
+  onDelete: null,
+  onEdit: null,
+  isUserPost: false,
 };
 export default PostCard;
