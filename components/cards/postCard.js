@@ -56,9 +56,13 @@ PostCard.propTypes = {
     imageUrl: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  isUserPost: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
+  isUserPost: PropTypes.bool,
 };
-
+PostCard.defaultProps = {
+  onDelete: null,
+  onEdit: null,
+  isUserPost: false,
+};
 export default PostCard;
