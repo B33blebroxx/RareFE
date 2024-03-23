@@ -9,8 +9,8 @@ export default function UserCard({ userObj }) {
   const isCurrentUserProfile = user.uid === userObj.uid;
 
   return (
-    <Card className="card-style" style={{ width: '35rem', padding: '20px' }}>
-      <Card.Img variant="top" style={{ width: '520px', height: '500px' }} src={userObj.profileImageUrl} />
+    <Card className="card-style" style={{ width: '48rem' }}>
+      <Card.Img variant="top" src={userObj.profileImageUrl} />
       <Card.Body>
         <Card.Title>{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
         <Card.Text>Bio: {userObj.bio}</Card.Text>
