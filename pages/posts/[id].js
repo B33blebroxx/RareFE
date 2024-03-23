@@ -102,31 +102,27 @@ function ViewSinglePost() {
           >
             Back To Post
           </Button>
+
           <CommentForm postObj={post} onUpdate={viewComments} />
-          <div style={{ textAlign: 'center' }}>
-            <div id="comment-title">
-              <h4 style={{ fontStyle: 'italic' }}>{post.title}</h4><h5 style={{ color: '#E5E5E5' }}> Comments:</h5><br />
-              <div className="commentsWrap">
-                {postDetails.comments && postDetails.comments.map((comment) => (
-                  <CommentCard key={comment.id} commentObj={comment} onUpdate={viewComments} />
-                ))}
-              </div>
-            </div>
+          <h4>{post.title} Comments</h4>
+          <div>
+            {postDetails.comments && postDetails.comments.map((comment) => (
+              <CommentCard key={comment.id} commentObj={comment} onUpdate={viewComments} />
+            ))}
           </div>
         </>
       ) : (
         <div><br />
           <h2>Post Details</h2><br />
-          <div className="details-container">
-            <Card className="card-style" style={{ width: '48rem' }}>
-              <Card.Img variant="top" src={post.imageUrl} />
-              <Card.Body>
-                <Card.Title>{post.title}</Card.Title>
-                <Card.Text>By {post.author}</Card.Text>
-                <Card.Text>{post.publicationDate}</Card.Text>
-                <br />
-                <Card.Text>{post.content}</Card.Text>
-                {isUserPost && (
+          <Card className="card-style" style={{ width: '48rem' }}>
+            <Card.Img variant="top" src={post.imageUrl} />
+            <Card.Body>
+              <Card.Title>{post.title}</Card.Title>
+              <Card.Text>By {post.author}</Card.Text>
+              <Card.Text>{post.publicationDate}</Card.Text>
+              <br />
+              <Card.Text>{post.content}</Card.Text>
+              {isUserPost && (
                 <>
                   <Button
                     onClick={handleEdit}
@@ -144,46 +140,45 @@ function ViewSinglePost() {
                     <img src="/deleteicon.png" alt="Delete post" style={{ width: '24px', height: '24px' }} />
                   </Button>
                 </>
-                )}
-                {count ? (
-                  <div
-                    className="card-reactions"
-                    style={{
-                      display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px',
-                    }}
-                  >
-                    {count.reactionCounts?.map((rc) => (
-                      <div key={rc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}><br />
-                        <Card.Img
-                          className="cReactions"
-                          variant="top"
-                          src={rc.image}
-                          alt={rc.label}
-                          onClick={() => handleReactionClick(rc.reactionId)}
-                          style={{ cursor: 'pointer', width: '30px' }}
-                        />
-                        <Card.Text>{rc.count}</Card.Text>
-                      </div>
-                    ))}
-                  </div>
-                ) : ''}<br />
-                <Button id="addreactionbtn" className="editBtn m-2" variant="outline-secondary" onClick={() => setAddOneReaction(!addOneReaction)}>
-                  Add Reaction
-                </Button>
-                {addOneReaction && (
+              )}
+              {count ? (
+                <div
+                  className="card-reactions"
+                  style={{
+                    display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px',
+                  }}
+                >
+                  {count.reactionCounts?.map((rc) => (
+                    <div key={rc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}><br />
+                      <Card.Img
+                        className="cReactions"
+                        variant="top"
+                        src={rc.image}
+                        alt={rc.label}
+                        onClick={() => handleReactionClick(rc.reactionId)}
+                        style={{ cursor: 'pointer', width: '30px' }}
+                      />
+                      <Card.Text>{rc.count}</Card.Text>
+                    </div>
+                  ))}
+                </div>
+              ) : ''}<br />
+              <Button id="addreactionbtn" className="editBtn m-2" variant="outline-secondary" onClick={() => setAddOneReaction(!addOneReaction)}>
+                Add Reaction
+              </Button>
+              {addOneReaction && (
                 <div className="reactionsWrap">
                   {allReactions.map((reaction) => (
                     <AllReactionsCard key={reaction.id} reactionObj={reaction} onClick={() => handleReactionClick(reaction.id)} />
                   ))}
                 </div>
-                )}
-                <Button id="viewcommentbtn" className="viewCommentsBtn m-2" variant="outline-secondary" onClick={viewComments}>
-                  View Comments
-                </Button>
-                <div><br />Total Reactions: {count.totalReactions}</div>
-              </Card.Body>
-            </Card><br /><br />
-          </div>
+              )}
+              <Button id="viewcommentbtn" className="viewCommentsBtn m-2" variant="outline-secondary" onClick={viewComments}>
+                View Comments
+              </Button>
+              <div><br />Total Reactions: {count.totalReactions}</div>
+            </Card.Body>
+          </Card><br /><br />
         </div>
       )}
     </>

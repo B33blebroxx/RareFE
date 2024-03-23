@@ -25,15 +25,11 @@ export default function EditComment() {
   return (
     <>
       <CommentForm commentObj={editComment} postObj={postDetails} onUpdate={getCPObjects} />
-      <div style={{ textAlign: 'center' }}>
-        <div id="comment-title">
-          <h4 style={{ fontStyle: 'italic' }}>{postDetails.title}</h4><h5 style={{ color: '#E5E5E5' }}> Comments:</h5>
-          <div className="commentsWrap">
-            {postDetails && postDetails.comments && postDetails.comments.map((comment) => (
-              <CommentCard key={comment.id} commentObj={comment} onUpdate={getCPObjects} />
-            ))}
-          </div>
-        </div>
+      <h2 className="postTitle">{postDetails?.title} Comments</h2>
+      <div className="commentsWrap">
+        {postDetails && postDetails.comments && postDetails.comments.map((comment) => (
+          <CommentCard key={comment.id} commentObj={comment} onUpdate={getCPObjects} />
+        ))}
       </div>
     </>
   );

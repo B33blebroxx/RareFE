@@ -65,7 +65,7 @@ export default function CommentForm({ commentObj, postObj, onUpdate }) {
             type="submit"
           >
             {commentObj.id ? 'Update' : 'Add Comment'}
-          </Button><br /><br />
+          </Button><br />
         </Form>
       </div>
     </>
