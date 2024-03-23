@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function MiniUserCard({ userObj }) {
   return (
     <Card id="mini-user-card">
-      <Card.Img variant="top" src={userObj.profileImageUrl} alt="User profile picture" />
+      <Card.Img variant="top" style={{ paddingTop: '10px' }} src={userObj.profileImageUrl} alt="User profile picture" />
       <Card.Body>
         <Card.Title>{`${userObj.firstName} ${userObj.lastName}`}</Card.Title>
       </Card.Body>
