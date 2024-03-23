@@ -56,9 +56,13 @@ PostCard.propTypes = {
     imageUrl: PropTypes.string,
     content: PropTypes.string,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  isUserPost: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
+  isUserPost: PropTypes.bool,
 };
-
+PostCard.defaultProps = {
+  onDelete: null, // or () => {} if you want to define a no-op function
+  onEdit: null, // or () => {} as above
+  isUserPost: false, // Assuming false as default, adjust according to your logic
+};
 export default PostCard;

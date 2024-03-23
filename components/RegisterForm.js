@@ -17,12 +17,17 @@ function RegisterForm({ userObj }) {
     bio: userObj.bio || '',
     profileImageUrl: userObj.profileImageUrl || '',
     email: userObj.email || '',
-    createdOn: userObj.createdOn || new Date().toISOString(),
+    createdOn: userObj.createdOn ? new Date(userObj.createdOn).toISOString() : new Date().toISOString(),
     active: userObj.active !== undefined ? userObj.active : true,
   });
 
   useEffect(() => {
-    if (userObj?.id) setFormData(userObj);
+    if (userObj?.id) {
+      setFormData({
+        ...userObj,
+        createdOn: userObj.createdOn ? new Date(userObj.createdOn).toISOString() : new Date().toISOString(),
+      });
+    }
   }, [userObj, user]);
 
   const handleChange = (e) => {

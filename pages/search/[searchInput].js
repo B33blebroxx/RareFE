@@ -22,7 +22,7 @@ export default function Search() {
 
   return (
     <>
-      <div id="search-results" className="d-flex flex-wrap">
+      <div className="card-container">
         {filteredPosts.map((post) => <PostCard key={post.id} postObj={post} onUpdate={searchPostsByTitle} />)}
       </div>
     </>
