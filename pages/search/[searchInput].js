@@ -21,10 +21,10 @@ export default function Search() {
   }, [searchInput]);
 
   return (
-    <>
+    <><br />
       <div id="search-results" className="d-flex flex-wrap">
         {filteredPosts.map((post) => <PostCard key={post.id} postObj={post} onUpdate={searchPostsByTitle} />)}
-      </div>
+      </div><br /><br />
     </>
   );
 }

@@ -106,7 +106,7 @@ export default function ViewUserProfileAndPosts() {
         }}
       />
       <div className="card-container">{isNotCurrentUserProfile && (
-        <Button variant="outline-primary" onClick={handleClick}>{button}</Button>
+        <Button variant="outline-secondary" onClick={handleClick}>{button}</Button>
       )}
         <h3>Subscribers: {subCount}</h3>
       </div>

@@ -23,10 +23,10 @@ function CommentCard({ commentObj, onUpdate }) {
         {user[0].id === commentObj.authorId ? (
           <div className="buttonWrap">
             <Link href={`/comments/edit/${commentObj.id}`} passHref>
-              <Button className="editBtn m-2" variant="outline-info">EDIT</Button>
+              <Button id="cmntedit" className="editBtn m-2">EDIT</Button>
             </Link>
             <div>
-              <Button variant="outline-warning" size="sm" onClick={deleteThisComment} className="deleteBtn m-2">
+              <Button id="cmntdlt" size="sm" onClick={deleteThisComment} className="deleteBtn m-2">
                 DELETE
               </Button>
             </div>
