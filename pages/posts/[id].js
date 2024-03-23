@@ -112,7 +112,7 @@ function ViewSinglePost() {
           </div>
         </>
       ) : (
-        <div><br />
+        <div className="card-container"><br />
           <h2>Post Details</h2><br />
           <Card className="card-style" style={{ width: '48rem' }}>
             <Card.Img variant="top" src={post.imageUrl} />
