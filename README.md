@@ -1,44 +1,34 @@
-# React/Next.js Django Auth Template
+# RARE Publishing
 
-## Topics
-- [Get Started](#getting-started)
-- [Starting the Project](#starting-the-project)
-___
-## Getting Started
-### Use Template
-#### 1. To get started, click the GREEN "Use this Template" button at the top of the repo
-<img width="915" alt="Screen Shot 2022-07-06 at 12 54 01 PM" src="https://user-images.githubusercontent.com/29741570/177612998-4aac9237-5a1e-4f13-8ae0-468587521564.png">
+RARE Publishing is an app for writers who want to create blog posts, and read posts by other people.
 
-#### 2. Make sure YOUR github account is selected in the dropdown and name your project
-<img width="763" alt="Screen Shot 2022-07-06 at 12 54 48 PM" src="https://user-images.githubusercontent.com/29741570/177613126-dd38f678-7553-4f27-8a4a-75680f14d71e.png">
+## About the User 
+- The ideal user for this application is someone who likes to write & read blog posts.
+- They want a community where they can read other people's blog posts, subscribe & interact with them.
 
-#### 3. Clone your new repo to your local machine
-#### 4. Go to the **NEXT** section
+## Features 
+- When a user registers for the app, they will then be able to sign in via google authorization.
+- Once logged in, users will see their homepage which will be any posts they subscribe to.
+- User can also see their posts, and all posts that exist in RARE publishing. 
+- Users can see other users/creators, their profiles, and subscribe to their posts.
+- Users can add comments, reactions, and update/delete their comments.
+- Users can update/delete their posts.
+- Users can search throughout the different posts in the app.
 
-## Starting the Project
-1. Create a Firebase project and set up authentication. Use [these videos](https://vimeo.com/showcase/codetracker-firebase) as a refresher if needed.
-1. Create a `.env` file at the root of the project
-1. Copy/Paste the contents of the `.env.sample` file to your newly created `.env` file.
-1. Copy over all of your Firebase values into the `.env` file.
-1. Open the `package.json` file and change the `name` property to the name of your application, and `author` to  your name.
-1. From your command line, be in the root directory and run `npm install` OR `npm i` for short.
-1. Next, run `npm run prepare`. This command sets up husky to track eslint errors on commit that will make your deploy fail on Netlify.
-1. To start your application, run `npm run dev`. THIS IS THE COMMAND YOU WILL USE TO RUN YOUR DEVELOPMENT SERVER FROM NOW ON.
-1. Open [http://localhost:3000](http://localhost:3000) with your browser.
+## Video Walkthrough of Migraine Manager
+- [Loom video]([https://www.loom.com/share/36c257843ea34b49927d0b0a1308c2b1?sid=ff568340-834a-496f-ab11-6f8568298092](https://www.loom.com/share/6c33526d2cc7473084f19bf7b6f4a4ec)
 
-### If you see this, you are set to go!
-<img width="450" alt="Screen Shot 2022-07-06 at 1 07 27 PM" src="https://user-images.githubusercontent.com/29741570/177615077-9b6a75bc-0260-4d29-bb88-bd95a3140687.png">
+## Project Screenshots
+![rare1](https://github.com/B33blebroxx/RareFE/assets/134669892/0f48eae2-88fe-43f3-a744-8d6a824c857d)
+![rare2](https://github.com/B33blebroxx/RareFE/assets/134669892/07c47f1a-5aff-42d1-b901-6583be7c3694)
+![rare3](https://github.com/B33blebroxx/RareFE/assets/134669892/ff817e75-de7b-4546-a1a3-2eb8870c4aad)
+![rare4](https://github.com/B33blebroxx/RareFE/assets/134669892/4591da37-037c-4c52-a563-cd2b9cc6e6dc)
 
+## Relevant Links 
+- [Project Board](https://github.com/users/B33blebroxx/projects/7)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-**NOTES:** 
-- If you see the following error, you did not follow all the setup steps correctly and failed to add your Firebase creds. Go back and do that NOW.
-
-<img width="1043" alt="Screen Shot 2022-07-06 at 11 18 45 AM" src="https://user-images.githubusercontent.com/29741570/177612501-c2628f18-4bbd-4de9-aae6-27ffba1172d6.png">
-        
-## Learn More about Next.js
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributors
+- [Brandon Schnurbusch](https://github.com/B33blebroxx)
+- [Maggie Chafee](https://github.com/MaggieChafee)
+- [Shari Ebach](https://github.com/GitEbachS)
+- [Dylan Kristine Moore](https://github.com/dylankmoore)
